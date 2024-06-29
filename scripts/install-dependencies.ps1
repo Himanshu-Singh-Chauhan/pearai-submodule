@@ -20,9 +20,18 @@ if ($null -eq $node) {
     Write-Host "Not Found " -ForegroundColor Red -NoNewLine
     Write-Host "node"
 } else {
-    Write-Host "Found " -ForegroundColor Green -NoNewLine
-    Write-Host "node "  -NoNewLine
-    & node --version
+    $nodeVersion = & node --version
+    if ($nodeVersion -match "^v20\.\d+\.\d+") {
+        Write-Host "Found " -ForegroundColor Green -NoNewLine
+        Write-Host "node "  -NoNewLine
+        Write-Host $nodeVersion
+    } else {
+        Write-Host "Detected Node.js version " -ForegroundColor Yellow -NoNewLine
+        Write-Host $nodeVersion
+        Write-Host "`nNode.js version 20.x is required. Please update Node.js." -ForegroundColor Red
+        Write-Host "`nExiting"
+        return
+    }
 }
 
 if ($null -eq $cargo) {
@@ -37,6 +46,7 @@ if ($null -eq $node) {
     Write-Host "`n...`n"
     Write-Host "NodeJS`n" -ForegroundColor White
     Write-Host "Doesn't appear to be installed or is not on your Path."
+    Write-Host "Node.js version 20.x is required." -ForegroundColor Yellow
     Write-Host "On most Windows systems you can install node using: " -NoNewLine
     Write-Host "winget install OpenJS.NodeJS.LTS " -ForegroundColor Green
     Write-Host "After installing restart your Terminal to update your Path."

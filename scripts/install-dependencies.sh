@@ -3,6 +3,10 @@
 # Start developing with:
 # - Run Task -> Install Dependencies
 # - Debug -> Extension
+
+source ./../../scripts/pearai/node-check.sh
+check_node_version
+
 set -e
 echo "Installing Core extension dependencies..."
 pushd core
