@@ -20,7 +20,7 @@ export async function activateExtension(context: vscode.ExtensionContext) {
 
   migrate("showWelcome_1", () => {
     // move pearai extension to auxiliary bar (we want secondary side bar to be default loaction for extension)
-    vscode.commands.executeCommand('workbench.action.moveSpecificExtensionToAuxBar');
+    vscode.commands.executeCommand('workbench.action.movePearExtensionToAuxBar');
 
     vscode.commands.executeCommand(
       "markdown.showPreview",
