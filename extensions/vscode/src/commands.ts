@@ -475,6 +475,15 @@ const commandsMap: (
     "pearai.viewHistory": () => {
       sidebar.webviewProtocol?.request("viewHistory", undefined);
     },
+    "pearai.resizeAuxiliaryBarWidth": () => {
+      vscode.commands.executeCommand("workbench.action.resizeAuxiliaryBarWidth");
+    },
+    "pearai.winResizeAuxiliaryBarWidth": () => {
+      vscode.commands.executeCommand("pearai.resizeAuxiliaryBarWidth");
+    },
+    "pearai.macResizeAuxiliaryBarWidth": () => {
+      vscode.commands.executeCommand("pearai.resizeAuxiliaryBarWidth");
+    },
     "pearai.toggleFullScreen": () => {
       // Check if full screen is already open by checking open tabs
       const fullScreenTab = getFullScreenTab();

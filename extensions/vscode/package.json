@@ -215,6 +215,18 @@
         "group": "PearAI"
       },
       {
+        "command": "pearai.macResizeAuxiliaryBarWidth",
+        "category": "PearAI",
+        "title": "Big Chat (CMD + [)",
+        "group": "PearAI"
+      },
+      {
+        "command": "pearai.winResizeAuxiliaryBarWidth",
+        "category": "PearAI",
+        "title": "Big Chat (ALT + [)",
+        "group": "PearAI"
+      },
+      {
         "command": "pearai.writeDocstringForCode",
         "category": "PearAI",
         "title": "Write a Docstring for this Code",
@@ -385,6 +397,16 @@
         }
       ],
       "view/title": [
+        {
+          "command": "pearai.winResizeAuxiliaryBarWidth",
+          "group": "navigation@0",
+          "when": "view == pearai.continueGUIView && (isWindows || isLinux)"
+        },
+        {
+          "command": "pearai.macResizeAuxiliaryBarWidth",
+          "group": "navigation@0",
+          "when": "view == pearai.continueGUIView && isMac"
+        },
         {
           "command": "pearai.newSession",
           "group": "navigation@1",
