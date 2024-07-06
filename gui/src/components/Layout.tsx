@@ -30,6 +30,7 @@ import { ftl } from "./dialogs/FTCDialog";
 import IndexingProgressBar from "./loaders/IndexingProgressBar";
 import ProgressBar from "./loaders/ProgressBar";
 import ModelSelect from "./modelSelection/ModelSelect";
+import commandpng from './command_1.png'
 
 // #region Styled Components
 const FOOTER_HEIGHT = "1.8em";
@@ -71,9 +72,22 @@ const Footer = styled.footer`
   overflow: hidden;
 `;
 
+const Header = styled.header`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: right;
+  padding: 8px;
+  align-items: center;
+  width: calc(100% - 16px);
+  height: ${FOOTER_HEIGHT};
+
+  overflow: hidden;
+`;
+
 const GridDiv = styled.div`
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr auto; // Add auto for Header and Footer
   min-height: 100vh;
   overflow-x: visible;
 `;
@@ -233,6 +247,29 @@ const Layout = () => {
         />
 
         <GridDiv>
+        {HIDE_FOOTER_ON_PAGES.includes(location.pathname) || (
+          <Header>
+            <div className="ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-2xl px-1 hover:bg-[#2d2d2d]">
+              <div
+                className="flex items-center cursor-pointer p-1 0rounded"
+                onClick={() => {
+                  if (location.pathname === "/help") {
+                    navigate("/");
+                  } else {
+                    navigate("/help");
+                  }
+                }}
+              >
+                {/* <QuestionMarkCircleIcon width="1.4em" height="1.4em" /> */}
+                <span className="ml-auto flex-none text-x font-semibold">Big Chat</span>
+                {/* <span className="ml-auto pl-3 flex-none text-x font-semibold font-mono">Ctrl + [</span> */}
+                <span className="flex ml-auto pl-3 flex-none text-x font-semibold font-mono items-center"><img height={25} src="./command_4.png" alt="asdf" /></span>
+                {/* <span className="ml-2 font-mono text-sm">(Ctrl + H)</span> */}
+              </div>
+            </div>
+            
+          </Header>
+        )}
           <Outlet />
           <DropdownPortalDiv id="model-select-top-div"></DropdownPortalDiv>
           {HIDE_FOOTER_ON_PAGES.includes(location.pathname) || (
@@ -328,3 +365,4 @@ const Layout = () => {
 };
 
 export default Layout;
+

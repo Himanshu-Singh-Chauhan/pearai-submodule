@@ -42,6 +42,8 @@ function EditorInset() {
   }, []);
 
   return (
+    <div>
+      himanshu
     <EditorInsetDiv ref={elementRef}>
       <TipTapEditor
         availableContextProviders={availableContextProviders}
@@ -52,6 +54,8 @@ function EditorInset() {
         }}
       ></TipTapEditor>
     </EditorInsetDiv>
+    </div>
+
   );
 }
 

@@ -365,6 +365,9 @@ function GUI(props: GUIProps) {
   return (
     <>
       <TopGuiDiv ref={topGuiDivRef}>
+      {/* <div>
+              himanshu
+            </div> */}
         <div className="max-w-3xl m-auto">
           <StepsDiv>
             {state.history.map((item, index: number) => {
@@ -453,17 +456,10 @@ function GUI(props: GUIProps) {
               );
             })}
           </StepsDiv>
+            
+        
 
-          <ContinueInputBox
-            onEnter={(editorContent, modifiers) => {
-              sendInput(editorContent, modifiers);
-            }}
-            isLastUserInput={false}
-            isMainInput={true}
-            hidden={active}
-          ></ContinueInputBox>
-
-          {active ? (
+          {/* {active ? (
             <>
               <br />
               <br />
@@ -487,7 +483,16 @@ function GUI(props: GUIProps) {
               <ArrowLeftIcon width="11px" height="11px" />
               Last Session
             </NewSessionButton>
-          ) : null}
+          ) : null} */}
+
+<ContinueInputBox
+            onEnter={(editorContent, modifiers) => {
+              sendInput(editorContent, modifiers);
+            }}
+            isLastUserInput={false}
+            isMainInput={true}
+            hidden={active}
+          ></ContinueInputBox>
         </div>
       </TopGuiDiv>
       {active && (

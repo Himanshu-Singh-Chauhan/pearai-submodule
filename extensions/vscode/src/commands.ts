@@ -481,6 +481,9 @@ const commandsMap: (
     "pearai.winResizeAuxiliaryBarWidth": () => {
       vscode.commands.executeCommand("pearai.resizeAuxiliaryBarWidth");
     },
+    "pearai.winshortcutResizeAuxiliaryBarWidth": () => {
+      vscode.commands.executeCommand("pearai.resizeAuxiliaryBarWidth");
+    },
     "pearai.macResizeAuxiliaryBarWidth": () => {
       vscode.commands.executeCommand("pearai.resizeAuxiliaryBarWidth");
     },
