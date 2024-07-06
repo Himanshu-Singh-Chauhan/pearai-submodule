@@ -274,6 +274,11 @@
         "key": "ctrl+["
       },
       {
+        "command": "pearai.viewHistory",
+        "mac": "cmd+o",
+        "key": "ctrl+o"
+      },
+      {
         "command": "pearai.acceptDiff",
         "mac": "shift+cmd+enter",
         "key": "shift+ctrl+enter"
