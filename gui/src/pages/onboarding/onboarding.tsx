@@ -140,7 +140,10 @@ function Onboarding() {
             });
             setLocalStorage("onboardingComplete", true);
 
-            if (selected === 1) {
+            if (selected === 0){
+              navigate("/models");
+            }
+            else if (selected === 1) {
               navigate("/localOnboarding");
             } else {
               // Only needed when we switch from the default (local) embeddings provider

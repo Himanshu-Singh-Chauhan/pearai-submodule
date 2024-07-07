@@ -49,7 +49,7 @@ function Models() {
         <ArrowLeftIcon
           width="1.2em"
           height="1.2em"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/onboarding")}
           className="inline-block ml-4 cursor-pointer"
         />
         <h3 className="text-lg font-bold m-2 inline-block">Add new model</h3>
