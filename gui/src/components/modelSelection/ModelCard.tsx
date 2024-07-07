@@ -135,7 +135,7 @@ function ModelCard(props: ModelCardProps) {
               style={{ marginRight: "10px" }}
             />
           )}
-          <h3>{props.title}</h3>
+          <h3 className={!props.description && "my-2"}>{props.title}</h3>
         </div>
         {props.tags?.map((tag) => {
           return (
@@ -152,7 +152,7 @@ function ModelCard(props: ModelCardProps) {
             </span>
           );
         })}
-        <p>{props.description}</p>
+        {props.description && <p>{props.description}</p>}
 
         {props.refUrl && (
           <a

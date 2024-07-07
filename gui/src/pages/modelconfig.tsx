@@ -175,7 +175,7 @@ function ModelConfig() {
           {modelInfo?.provider === "pearai-server" ? (
             <>
               <h3>1. Create Account & Subscribe at <a href="https://trypear.ai" target="_blank" rel="noopener noreferrer">trypear.ai</a></h3>
-              <h3>2. Login w/ PearAI via Webapp </h3>
+              <h3>2. Login with PearAI via Webapp </h3>
               <CustomModelButton
                 className="m-5"
                 disabled={false}
@@ -186,7 +186,17 @@ function ModelConfig() {
                   )
                 }
               >
-                <h3 className="text-center my-2">Login w/ PearAI</h3>
+              <img
+              src={`${window.vscMediaUrl}/logos/${modelInfo.icon}`}
+              height="24px"
+              style={{ marginRight: "5px" }}
+              />
+                <h3 className="text-center my-2">Login</h3>
+              <img
+              src={`${window.vscMediaUrl}/logos/${modelInfo.icon}`}
+              height="24px"
+              style={{ marginLeft: "5px" }}
+              />
               </CustomModelButton>
               <h3>3. Click To Complete </h3>
               <GridDiv>
@@ -194,7 +204,7 @@ function ModelConfig() {
                   <ModelCard
                     key={idx}
                     disabled={disableModelCards()}
-                    title={"Add PearAI Server"}
+                    title={"Start coding 😎"}
                     description={""}
                     tags={pkg.tags}
                     dimensions={pkg.dimensions}
