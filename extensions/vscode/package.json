@@ -215,15 +215,21 @@
         "group": "PearAI"
       },
       {
+        "command": "pearai.resizeAuxiliaryBarWidth",
+        "category": "PearAI",
+        "title": "Resize Chat",
+        "group": "PearAI"
+      },
+      {
         "command": "pearai.macResizeAuxiliaryBarWidth",
         "category": "PearAI",
-        "title": "Big Chat (CMD + [)",
+        "title": "Big Chat - CMD + [",
         "group": "PearAI"
       },
       {
         "command": "pearai.winResizeAuxiliaryBarWidth",
         "category": "PearAI",
-        "title": "Big Chat (ALT + [)",
+        "title": "Big Chat - CTRL + [",
         "group": "PearAI"
       },
       {
@@ -261,6 +267,16 @@
         "command": "pearai.focusContinueInputWithoutClear",
         "mac": "cmd+shift+l",
         "key": "ctrl+shift+l"
+      },
+      {
+        "command": "pearai.resizeAuxiliaryBarWidth",
+        "mac": "cmd+[",
+        "key": "ctrl+["
+      },
+      {
+        "command": "pearai.viewHistory",
+        "mac": "cmd+o",
+        "key": "ctrl+o"
       },
       {
         "command": "pearai.acceptDiff",
