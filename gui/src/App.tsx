@@ -20,6 +20,8 @@ import LocalOnboarding from "./pages/localOnboarding";
 import ExistingUserOnboarding from "./pages/onboarding/existingUserOnboarding";
 import Onboarding from "./pages/onboarding/onboarding";
 import Stats from "./pages/stats";
+import NoModelFound from "./pages/noModelFound";
+
 
 const router = createMemoryRouter([
   {
@@ -82,6 +84,10 @@ const router = createMemoryRouter([
       {
         path: "/migration",
         element: <MigrationPage />,
+      },
+      {
+        path: "/nomodel",
+        element: <NoModelFound />,
       },
     ],
   },

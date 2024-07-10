@@ -122,6 +122,23 @@ const NewSessionButton = styled.div`
   cursor: pointer;
 `;
 
+const ErrorToast = styled.div<{ disabled: boolean }>`
+  border: 1px solid ${lightGray};
+  border-radius: ${defaultBorderRadius};
+  border: 1px solid #be1b55;
+  background-color: #be1b5522;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+  ${(props) =>
+    props.disabled
+      ? `
+    opacity: 0.5;
+    `: ``}
+`;
+
 function fallbackRender({ error, resetErrorBoundary }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
 
@@ -161,7 +178,7 @@ function GUI(props: GUIProps) {
   // If there are no providers in config, we should redirect to models
   // This is the case on first install currently
   if (defaultModel?.provider === undefined) {
-    navigate("/models");
+    navigate("/nomodel");
   }
 
   const active = useSelector((state: RootState) => state.state.active);
@@ -171,6 +188,8 @@ function GUI(props: GUIProps) {
   // #region State
   const [stepsOpen, setStepsOpen] = useState<(boolean | undefined)[]>([]);
   const [showLoading, setShowLoading] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -259,6 +278,10 @@ function GUI(props: GUIProps) {
 
   const sendInput = useCallback(
     (editorState: JSONContent, modifiers: InputModifiers) => {
+      if (!defaultModel) {
+        setShowErrorToast(true);
+        return;
+      }
       if (defaultModel?.provider === "free-trial") {
         const ftc = localStorage.getItem("ftc");
         if (ftc) {
@@ -509,6 +532,16 @@ function GUI(props: GUIProps) {
               Last Session
             </NewSessionButton>
           ) : null}
+          {showErrorToast && (
+              <div className="flex flex-col items-center justify-center">
+              <ErrorToast
+              disabled={false}
+              className="m-2 max-w-xs "
+              >
+                <p> Error : No Model selected </p></ErrorToast>
+              </div>
+              )
+          }
         </div>
       </TopGuiDiv>
       {active && (
