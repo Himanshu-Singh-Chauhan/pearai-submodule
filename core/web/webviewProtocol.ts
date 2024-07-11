@@ -136,6 +136,7 @@ export type ReverseWebviewProtocol = {
   addModel: [undefined, void];
   openSettings: [undefined, void];
   viewHistory: [undefined, void];
+  loadMostRecentChat: [undefined, void];
   indexProgress: [IndexingProgressUpdate, void];
   newSession: [undefined, void];
   refreshSubmenuItems: [undefined, void];

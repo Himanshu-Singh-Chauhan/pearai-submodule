@@ -92,7 +92,6 @@ type State = {
   sessionId: string;
   defaultModelTitle: string;
   mainEditorContent?: JSONContent;
-  mostRecentChat: string | undefined;
 };
 
 const initialState: State = {
@@ -124,7 +123,6 @@ const initialState: State = {
   title: "New Session",
   sessionId: v4(),
   defaultModelTitle: "GPT-4",
-  mostRecentChat: undefined,
 };
 
 export const stateSlice = createSlice({
@@ -458,9 +456,9 @@ export const stateSlice = createSlice({
         defaultModelTitle: payload.title,
       };
     },
-    setMostRecentChat(state, action: PayloadAction<string>) {
-      state.mostRecentChat = action.payload;
-    },
+    // setMostRecentChat(state, action: PayloadAction<string>) {
+    //   state.mostRecentChat = action.payload;
+    // },
   },
 });
 
@@ -484,6 +482,6 @@ export const {
   setMessageAtIndex,
   clearLastResponse,
   consumeMainEditorContent,
-  setMostRecentChat,
+  // setMostRecentChat,
 } = stateSlice.actions;
 export default stateSlice.reducer;

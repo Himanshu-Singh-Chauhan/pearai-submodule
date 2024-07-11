@@ -238,21 +238,6 @@ function GUI(props: GUIProps) {
     };
   }, [active]);
 
-  useEffect(() => {
-    // Cmd + 0 to open recent chat
-    const listener = async (e: any) => {
-      if (e.key === "0" && e.metaKey && state.mostRecentChat) {
-        saveSession();
-        await loadRecentChat();
-      }
-    };
-    window.addEventListener("keydown", listener);
-
-    return () => {
-      window.removeEventListener("keydown", listener);
-    };
-  }, [state.sessionId, state.mostRecentChat]);
-
   // #endregion
 
   const { streamResponse } = useChatHandler(dispatch);
@@ -357,7 +342,7 @@ function GUI(props: GUIProps) {
     ],
   );
 
-  const { saveSession, getLastSessionId, loadLastSession, loadRecentChat } =
+  const { saveSession, getLastSessionId, loadLastSession, loadMostRecentChat } =
     useHistory(dispatch);
 
   useWebviewListener(
@@ -367,6 +352,15 @@ function GUI(props: GUIProps) {
       mainTextInputRef.current?.focus?.();
     },
     [saveSession],
+  );
+
+  useWebviewListener(
+    "loadMostRecentChat",
+    async () => {
+      await loadMostRecentChat();
+      mainTextInputRef.current?.focus?.();
+    },
+    [loadMostRecentChat],
   );
 
   const isLastUserInput = useCallback(

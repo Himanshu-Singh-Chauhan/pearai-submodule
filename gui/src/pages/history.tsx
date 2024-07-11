@@ -103,8 +103,7 @@ function TableRow({
         <TdDiv
           onClick={async () => {
             // Save current session
-            saveSession();
-
+            saveSession(session.sessionId);
             await loadSession(session.sessionId);
             navigate("/");
           }}

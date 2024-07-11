@@ -590,7 +590,8 @@ const commandsMap: (
       );
     },
     "pearai.loadRecentChat": () => {
-      // Overrides VS code shortcut
+      sidebar.webviewProtocol?.request("loadMostRecentChat", undefined);
+      sidebar.webviewProtocol?.request("focusContinueInput", undefined);
     },
   };
 };

@@ -5,7 +5,7 @@ import { llmCanGenerateInParallel } from "core/llm/autodetect";
 import { stripImages } from "core/llm/countTokens";
 import { useSelector } from "react-redux";
 import { defaultModelSelector } from "../redux/selectors/modelSelectors";
-import { newSession, setMostRecentChat } from "../redux/slices/stateSlice";
+import { newSession } from "../redux/slices/stateSlice";
 import { RootState } from "../redux/store";
 import { ideRequest } from "../util/ide";
 import { getLocalStorage, setLocalStorage } from "../util/localStorage";
@@ -31,7 +31,7 @@ function useHistory(dispatch: Dispatch) {
     return await ideRequest("history/list", { offset, limit });
   }
 
-  async function saveSession() {
+  async function saveSession(sessionId?: string) {
     if (state.history.length === 0) return;
 
     const stateCopy = { ...state };
@@ -76,7 +76,14 @@ function useHistory(dispatch: Dispatch) {
       sessionId: stateCopy.sessionId,
       workspaceDirectory: window.workspacePaths?.[0] || "",
     };
-    setLocalStorage("lastSessionId", stateCopy.sessionId);
+
+    if (!sessionId) {
+      setLocalStorage("lastSessionId", stateCopy.sessionId);
+    }
+    else if (sessionId && sessionId !== stateCopy.sessionId) {
+      // we update the lastsessionId only if the sessionId is different from current sessionId
+      setLocalStorage("lastSessionId", stateCopy.sessionId);
+    }
     return await ideRequest("history/save", sessionInfo);
   }
 
@@ -85,11 +92,8 @@ function useHistory(dispatch: Dispatch) {
   }
 
   async function loadSession(id: string): Promise<PersistedSessionInfo> {
-    setLocalStorage("lastSessionId", state.sessionId);
-
-    // If the session to load is not the same as the current session
     if (state.sessionId && id !== state.sessionId) {
-      dispatch(setMostRecentChat(state.sessionId));
+      setLocalStorage("lastSessionId", state.sessionId);
     }
     const json: PersistedSessionInfo = await ideRequest("history/load", { id });
     dispatch(newSession(json));
@@ -102,8 +106,8 @@ function useHistory(dispatch: Dispatch) {
       return await loadSession(lastSessionId);
     }
   }
-  async function loadRecentChat(): Promise<PersistedSessionInfo> {
-    return await loadSession(state.mostRecentChat);
+  async function loadMostRecentChat(): Promise<PersistedSessionInfo> {
+    return await loadLastSession();
   }
 
   function getLastSessionId(): string {
@@ -117,7 +121,7 @@ function useHistory(dispatch: Dispatch) {
     loadSession,
     loadLastSession,
     getLastSessionId,
-    loadRecentChat,
+    loadMostRecentChat,
   };
 }
 
