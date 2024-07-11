@@ -3,7 +3,7 @@
 # Run each command in parallel
 (
   cd extensions/vscode
-  tsc -p ./
+  npm run tsc
 ) &
 
 (
@@ -16,9 +16,9 @@
   npm run esbuild
 ) &
 
-# (
-#   cd gui
-#   npm run dev
-# ) &
+(
+  cd gui
+  npm run build
+) &
 
 wait
