@@ -5,6 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import CustomPostHogProvider from "./hooks/CustomPostHogProvider";
 import "./index.css";
+import "./shortcuts-bar.css";
 import { persistor, store } from "./redux/store";
 
 (async () => {

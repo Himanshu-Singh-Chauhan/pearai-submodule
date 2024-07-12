@@ -31,6 +31,11 @@ import IndexingProgressBar from "./loaders/IndexingProgressBar";
 import ProgressBar from "./loaders/ProgressBar";
 import ModelSelect from "./modelSelection/ModelSelect";
 
+// check mac or window
+const platform = navigator.userAgent.toLowerCase();
+const isMac = platform.includes('mac');
+const isWindows = platform.includes('win');
+  
 // #region Styled Components
 const FOOTER_HEIGHT = "1.8em";
 
@@ -86,9 +91,9 @@ const Header = styled.header`
   overflow: hidden;
 `;
 
-const GridDiv = styled.div`
+const GridDiv = styled.div<{ showHeader: boolean }>`
   display: grid;
-  grid-template-rows: auto 1fr auto; // Add auto for Header and Footer
+  grid-template-rows: ${(props) => (props.showHeader ? "auto 1fr auto" : "1fr auto")};
   min-height: 100vh;
   overflow-x: visible;
 `;
@@ -107,6 +112,10 @@ const HIDE_FOOTER_ON_PAGES = [
   "/onboarding",
   "/existingUserOnboarding",
   "/localOnboarding",
+];
+
+const SHOW_SHORTCUTS_ON_PAGES = [
+  "/",
 ];
 
 const Layout = () => {
@@ -226,24 +235,7 @@ const Layout = () => {
     status: "disabled",
   });
 
-  // check mac or window using os lib and store in variable
-  // const platform = os.platform();
-  // const isMac = platform === "darwin";
-  // const isWindows = platform === "win32";
-
-  // const platform = process.platform;
-  // const isMac = platform === 'darwin';
-  // const modifier = isMac ? 'Cmd' : 'Ctrl';
-  // const [modifier] = useState(window.navigator.platform === 'darwin' ? 'Cmd' : 'Ctrl');
-
-  // if (platform === 'win32') {
-  //   return path.join(process.env.APPDATA || '', 'pearai', 'User');
-  // } else if (platform === 'darwin') {
-  //   return path.join(os.homedir(), 'Library', 'Application Support', 'pearai', 'User');
-  // } else {
-  //   return path.join(os.homedir(), '.config', 'pearai', 'User');
-  // }
-
+  const [modifier] = useState(isMac ? 'Cmd' : 'Ctrl');
 
   return (
     <LayoutTopDiv>
@@ -266,17 +258,15 @@ const Layout = () => {
           message={dialogMessage}
         />
 
-        <GridDiv>
-          {HIDE_FOOTER_ON_PAGES.includes(location.pathname) || (
+        <GridDiv
+          showHeader={SHOW_SHORTCUTS_ON_PAGES.includes(location.pathname)}
+        >
+          {SHOW_SHORTCUTS_ON_PAGES.includes(location.pathname) && (
             <Header>
-              <div className='ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-sm px-1 hover:bg-[#2d2d2d]'>
+              <div className='ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl px- hover:bg-[#2d2d2d]'>
                 <span className='text-[12px]'>Big Chat -</span>
-                <div
-                  className='monaco-keybinding'
-                  custom-hover='true'
-                  aria-label='Control+P'
-                >
-                  <span className='monaco-keybinding-key'>CMD</span>
+                <div className='monaco-keybinding' aria-label={`${modifier}+P`}>
+                  <span className='monaco-keybinding-key'>{modifier}</span>
                   <span className='monaco-keybinding-key-separator'>+</span>
                   <span className='monaco-keybinding-key'>]</span>
                 </div>
@@ -287,12 +277,8 @@ const Layout = () => {
               <div className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-sm px-1 hover:bg-[#2d2d2d]'>
                 {/* <hr style={"width: 1px; height: 20px; display: inline-block;"}></hr> */}
                 <span className='text-[12px]'>Close Chat -</span>
-                <div
-                  className='monaco-keybinding'
-                  custom-hover='true'
-                  aria-label='Control+;'
-                >
-                  <span className='monaco-keybinding-key'>CMD</span>
+                <div className='monaco-keybinding' aria-label={`${modifier}+;`}>
+                  <span className='monaco-keybinding-key'>{modifier}</span>
                   <span className='monaco-keybinding-key-separator'>+</span>
                   <span className='monaco-keybinding-key'>;</span>
                 </div>
