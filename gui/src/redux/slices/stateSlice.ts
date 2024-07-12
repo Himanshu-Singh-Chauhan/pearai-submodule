@@ -456,9 +456,6 @@ export const stateSlice = createSlice({
         defaultModelTitle: payload.title,
       };
     },
-    // setMostRecentChat(state, action: PayloadAction<string>) {
-    //   state.mostRecentChat = action.payload;
-    // },
   },
 });
 
@@ -482,6 +479,5 @@ export const {
   setMessageAtIndex,
   clearLastResponse,
   consumeMainEditorContent,
-  // setMostRecentChat,
 } = stateSlice.actions;
 export default stateSlice.reducer;
