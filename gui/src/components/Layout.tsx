@@ -85,7 +85,7 @@ const Header = styled.header`
   padding-top: 0;
   padding-bottom: 0;
   align-items: center;
-  width: calc(100% - 16px);
+  width: calc(100% - 5px);
   height: ${FOOTER_HEIGHT};
 
   overflow: hidden;
@@ -276,7 +276,7 @@ const Layout = () => {
               </div>
               <div className='px-1'>&#8226;</div>
               <div
-                className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl pl-3 pr-1 hover:bg-[#2d2d2d] cursor-pointer'
+                className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl px-3 hover:bg-[#2d2d2d] cursor-pointer'
                 onClick={() => postToIde('closeChat', undefined)}
               >
                 <span className='text-[12px]'>Close Chat -</span>
