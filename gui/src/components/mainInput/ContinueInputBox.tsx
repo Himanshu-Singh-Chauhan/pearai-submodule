@@ -47,7 +47,7 @@ const GradientBorder = styled.div<{
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 3px;
 `;
 
 interface ContinueInputBoxProps {
@@ -88,7 +88,7 @@ function ContinueInputBox(props: ContinueInputBoxProps) {
   return (
     <div
       style={{
-        paddingTop: "4px",
+        paddingTop: "0px",
         backgroundColor: vscBackground,
         display: props.hidden ? "none" : "inherit",
       }}

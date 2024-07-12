@@ -421,12 +421,12 @@
         {
           "command": "pearai.winResizeAuxiliaryBarWidth",
           "group": "navigation@0",
-          "when": "view == pearai.continueGUIView && (isWindows || isLinux)"
+          "when": "false && view == pearai.continueGUIView && (isWindows || isLinux)"
         },
         {
           "command": "pearai.macResizeAuxiliaryBarWidth",
           "group": "navigation@0",
-          "when": "view == pearai.continueGUIView && isMac"
+          "when": "false && view == pearai.continueGUIView && isMac"
         },
         {
           "command": "pearai.newSession",

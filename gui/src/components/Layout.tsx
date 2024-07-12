@@ -71,9 +71,24 @@ const Footer = styled.footer`
   overflow: hidden;
 `;
 
+const Header = styled.header`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: right;
+  padding: 8px;
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: center;
+  width: calc(100% - 16px);
+  height: ${FOOTER_HEIGHT};
+
+  overflow: hidden;
+`;
+
 const GridDiv = styled.div`
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr auto; // Add auto for Header and Footer
   min-height: 100vh;
   overflow-x: visible;
 `;
@@ -211,14 +226,33 @@ const Layout = () => {
     status: "disabled",
   });
 
+  // check mac or window using os lib and store in variable
+  // const platform = os.platform();
+  // const isMac = platform === "darwin";
+  // const isWindows = platform === "win32";
+
+  // const platform = process.platform;
+  // const isMac = platform === 'darwin';
+  // const modifier = isMac ? 'Cmd' : 'Ctrl';
+  // const [modifier] = useState(window.navigator.platform === 'darwin' ? 'Cmd' : 'Ctrl');
+
+  // if (platform === 'win32') {
+  //   return path.join(process.env.APPDATA || '', 'pearai', 'User');
+  // } else if (platform === 'darwin') {
+  //   return path.join(os.homedir(), 'Library', 'Application Support', 'pearai', 'User');
+  // } else {
+  //   return path.join(os.homedir(), '.config', 'pearai', 'User');
+  // }
+
+
   return (
     <LayoutTopDiv>
       <div
         style={{
-          scrollbarGutter: "stable both-edges",
-          minHeight: "100%",
-          display: "grid",
-          gridTemplateRows: "1fr auto",
+          scrollbarGutter: 'stable both-edges',
+          minHeight: '100%',
+          display: 'grid',
+          gridTemplateRows: '1fr auto',
         }}
       >
         <TextDialog
@@ -233,11 +267,43 @@ const Layout = () => {
         />
 
         <GridDiv>
+          {HIDE_FOOTER_ON_PAGES.includes(location.pathname) || (
+            <Header>
+              <div className='ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-sm px-1 hover:bg-[#2d2d2d]'>
+                <span className='text-[12px]'>Big Chat -</span>
+                <div
+                  className='monaco-keybinding'
+                  custom-hover='true'
+                  aria-label='Control+P'
+                >
+                  <span className='monaco-keybinding-key'>CMD</span>
+                  <span className='monaco-keybinding-key-separator'>+</span>
+                  <span className='monaco-keybinding-key'>]</span>
+                </div>
+              </div>
+              <div className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-2xl px-1 hover:bg-[#2d2d2d]'>
+                <div className='vr'></div>
+              </div>
+              <div className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-sm px-1 hover:bg-[#2d2d2d]'>
+                {/* <hr style={"width: 1px; height: 20px; display: inline-block;"}></hr> */}
+                <span className='text-[12px]'>Close Chat -</span>
+                <div
+                  className='monaco-keybinding'
+                  custom-hover='true'
+                  aria-label='Control+;'
+                >
+                  <span className='monaco-keybinding-key'>CMD</span>
+                  <span className='monaco-keybinding-key-separator'>+</span>
+                  <span className='monaco-keybinding-key'>;</span>
+                </div>
+              </div>
+            </Header>
+          )}
           <Outlet />
-          <DropdownPortalDiv id="model-select-top-div"></DropdownPortalDiv>
+          <DropdownPortalDiv id='model-select-top-div'></DropdownPortalDiv>
           {HIDE_FOOTER_ON_PAGES.includes(location.pathname) || (
             <Footer>
-              <div className="mr-auto flex gap-2 items-center">
+              <div className='mr-auto flex gap-2 items-center'>
                 {/* {localStorage.getItem("ide") === "jetbrains" ||
                 localStorage.getItem("hideFeature") === "true" || (
                   <SparklesIcon
@@ -267,10 +333,10 @@ const Layout = () => {
                   />
                 )} */}
                 <ModelSelect />
-                {indexingState.status !== "indexing" && // Would take up too much space together with indexing progress
-                  defaultModel?.provider === "free-trial" && (
+                {indexingState.status !== 'indexing' && // Would take up too much space together with indexing progress
+                  defaultModel?.provider === 'free-trial' && (
                     <ProgressBar
-                      completed={parseInt(localStorage.getItem("ftc") || "0")}
+                      completed={parseInt(localStorage.getItem('ftc') || '0')}
                       total={ftl()}
                     />
                   )}
@@ -280,25 +346,25 @@ const Layout = () => {
                 )}
               </div>
               <HeaderButtonWithText
-                text="Help"
+                text='Help'
                 onClick={() => {
-                  if (location.pathname === "/help") {
-                    navigate("/");
+                  if (location.pathname === '/help') {
+                    navigate('/');
                   } else {
-                    navigate("/help");
+                    navigate('/help');
                   }
                 }}
               >
-                <QuestionMarkCircleIcon width="1.4em" height="1.4em" />
+                <QuestionMarkCircleIcon width='1.4em' height='1.4em' />
               </HeaderButtonWithText>
               <HeaderButtonWithText
                 onClick={() => {
                   // navigate("/settings");
-                  postToIde("openConfigJson", undefined);
+                  postToIde('openConfigJson', undefined);
                 }}
-                text="Configure PearAI"
+                text='Configure PearAI'
               >
-                <Cog6ToothIcon width="1.4em" height="1.4em" />
+                <Cog6ToothIcon width='1.4em' height='1.4em' />
               </HeaderButtonWithText>
             </Footer>
           )}
@@ -321,10 +387,11 @@ const Layout = () => {
       </div>
       <div
         style={{ fontSize: `${getFontSize() - 4}px` }}
-        id="tooltip-portal-div"
+        id='tooltip-portal-div'
       />
     </LayoutTopDiv>
   );
 };
 
 export default Layout;
+
