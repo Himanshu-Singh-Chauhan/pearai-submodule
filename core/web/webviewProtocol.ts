@@ -86,6 +86,8 @@ export type WebviewProtocol = Protocol &
     reloadWindow: [undefined, void];
     focusEditor: [undefined, void];
     toggleFullScreen: [undefined, void];
+    bigChat: [undefined, void];
+    closeChat: [undefined, void];
     "stats/getTokensPerDay": [
       undefined,
       { day: string; promptTokens: number; generatedTokens: number }[],

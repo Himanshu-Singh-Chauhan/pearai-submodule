@@ -79,9 +79,9 @@ const Footer = styled.footer`
 const Header = styled.header`
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 2px;
   justify-content: right;
-  padding: 8px;
+  padding: 1px;
   padding-top: 0;
   padding-bottom: 0;
   align-items: center;
@@ -263,7 +263,10 @@ const Layout = () => {
         >
           {SHOW_SHORTCUTS_ON_PAGES.includes(location.pathname) && (
             <Header>
-              <div className='ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl px- hover:bg-[#2d2d2d]'>
+              <div
+                className='ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl px-3 hover:bg-[#2d2d2d] cursor-pointer'
+                onClick={() => postToIde('bigChat', undefined)}
+              >
                 <span className='text-[12px]'>Big Chat -</span>
                 <div className='monaco-keybinding' aria-label={`${modifier}+P`}>
                   <span className='monaco-keybinding-key'>{modifier}</span>
@@ -271,11 +274,11 @@ const Layout = () => {
                   <span className='monaco-keybinding-key'>]</span>
                 </div>
               </div>
-              <div className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-2xl px-1 hover:bg-[#2d2d2d]'>
-                <div className='vr'></div>
-              </div>
-              <div className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-sm px-1 hover:bg-[#2d2d2d]'>
-                {/* <hr style={"width: 1px; height: 20px; display: inline-block;"}></hr> */}
+              <div className='px-1'>&#8226;</div>
+              <div
+                className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl pl-3 pr-1 hover:bg-[#2d2d2d] cursor-pointer'
+                onClick={() => postToIde('closeChat', undefined)}
+              >
                 <span className='text-[12px]'>Close Chat -</span>
                 <div className='monaco-keybinding' aria-label={`${modifier}+;`}>
                   <span className='monaco-keybinding-key'>{modifier}</span>
