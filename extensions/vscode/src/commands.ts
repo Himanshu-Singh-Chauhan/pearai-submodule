@@ -596,6 +596,9 @@ const commandsMap: (
       sidebar.webviewProtocol?.request("loadMostRecentChat", undefined);
       sidebar.webviewProtocol?.request("focusContinueInput", undefined);
     },
+    "pearai.closeChat": () => {
+      vscode.commands.executeCommand("workbench.action.toggleAuxiliaryBar");
+    },
   };
 };
 

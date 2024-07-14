@@ -87,6 +87,7 @@ export type WebviewProtocol = Protocol &
     focusEditor: [undefined, void];
     toggleFullScreen: [undefined, void];
     bigChat: [undefined, void];
+    lastChat: [undefined, void];
     closeChat: [undefined, void];
     "stats/getTokensPerDay": [
       undefined,

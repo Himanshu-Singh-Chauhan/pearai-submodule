@@ -118,6 +118,33 @@ const SHOW_SHORTCUTS_ON_PAGES = [
   "/",
 ];
 
+
+type ShortcutProps = {
+  modifier: string;
+  keyCode: string;
+  description: string;
+  onClick?: () => void;
+};
+
+const Shortcut = ({modifier, keyCode, description, onClick}: ShortcutProps) => {
+  // NOTE: make it scrollable if we add too many shortcuts.
+  return (
+    <div
+      className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-lg px-1 cursor-pointer select-none'
+      onClick={onClick}
+    >
+      <span className='text-[12px]'>{description}</span>
+      <div className='monaco-keybinding' aria-label={`${modifier}+${keyCode}`}>
+        <span className='monaco-keybinding-key'>{modifier}</span>
+        {/* leaving this commented, if we want to add separators in future */}
+        {/* <span className='monaco-keybinding-key-separator'>+</span> */}
+        <span className='monaco-keybinding-key'>{keyCode}</span>
+      </div>
+    </div>
+  );
+}
+
+
 const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -263,29 +290,24 @@ const Layout = () => {
         >
           {SHOW_SHORTCUTS_ON_PAGES.includes(location.pathname) && (
             <Header>
-              <div
-                className='ml-auto flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl px-3 hover:bg-[#2d2d2d] cursor-pointer'
+              <Shortcut
+                modifier={modifier}
+                keyCode='0'
+                description='Last'
+                onClick={() => postToIde('lastChat', undefined)}
+              />
+              <Shortcut
+                modifier={modifier}
+                keyCode='['
+                description='Big'
                 onClick={() => postToIde('bigChat', undefined)}
-              >
-                <span className='text-[12px]'>Big Chat -</span>
-                <div className='monaco-keybinding' aria-label={`${modifier}+P`}>
-                  <span className='monaco-keybinding-key'>{modifier}</span>
-                  <span className='monaco-keybinding-key-separator'>+</span>
-                  <span className='monaco-keybinding-key'>]</span>
-                </div>
-              </div>
-              <div className='px-1'>&#8226;</div>
-              <div
-                className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-xl px-3 hover:bg-[#2d2d2d] cursor-pointer'
+              />
+              <Shortcut
+                modifier={modifier}
+                keyCode=';'
+                description='Close'
                 onClick={() => postToIde('closeChat', undefined)}
-              >
-                <span className='text-[12px]'>Close Chat -</span>
-                <div className='monaco-keybinding' aria-label={`${modifier}+;`}>
-                  <span className='monaco-keybinding-key'>{modifier}</span>
-                  <span className='monaco-keybinding-key-separator'>+</span>
-                  <span className='monaco-keybinding-key'>;</span>
-                </div>
-              </div>
+              />
             </Header>
           )}
           <Outlet />

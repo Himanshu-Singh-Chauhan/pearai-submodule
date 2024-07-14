@@ -216,8 +216,11 @@ export class VsCodeWebviewProtocol {
     this.on("bigChat", (msg) => {
       vscode.commands.executeCommand("pearai.resizeAuxiliaryBarWidth");
     });
+    this.on("lastChat", (msg) => {
+      vscode.commands.executeCommand("pearai.loadRecentChat");
+    });
     this.on("closeChat", (msg) => {
-      vscode.commands.executeCommand("pearai.toggleFullScreen");
+      vscode.commands.executeCommand("pearai.closeChat");
     });
 
     // IDE
