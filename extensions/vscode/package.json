@@ -419,16 +419,6 @@
       ],
       "view/title": [
         {
-          "command": "pearai.winResizeAuxiliaryBarWidth",
-          "group": "navigation@0",
-          "when": "false && view == pearai.continueGUIView && (isWindows || isLinux)"
-        },
-        {
-          "command": "pearai.macResizeAuxiliaryBarWidth",
-          "group": "navigation@0",
-          "when": "false && view == pearai.continueGUIView && isMac"
-        },
-        {
           "command": "pearai.newSession",
           "group": "navigation@1",
           "when": "view == pearai.continueGUIView"

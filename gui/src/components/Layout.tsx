@@ -149,8 +149,6 @@ const Shortcut = ({
             {mod}
           </span>
         ))}
-        {/* leaving this commented, if we want to add separators in future */}
-        {/* <span className='monaco-keybinding-key-separator'>+</span> */}
         <span className='monaco-keybinding-key'>{keyCode}</span>
       </div>
     </div>
