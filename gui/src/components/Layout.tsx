@@ -3,7 +3,7 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 import { IndexingProgressUpdate } from "core";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -120,29 +120,96 @@ const SHOW_SHORTCUTS_ON_PAGES = [
 
 
 type ShortcutProps = {
-  modifier: string;
+  modifiers: string[];
   keyCode: string;
   description: string;
   onClick?: () => void;
 };
 
-const Shortcut = ({modifier, keyCode, description, onClick}: ShortcutProps) => {
-  // NOTE: make it scrollable if we add too many shortcuts.
+const Shortcut = ({
+  modifiers,
+  keyCode,
+  description,
+  onClick,
+}: ShortcutProps) => {
+  const modifierString = modifiers.join(' + ');
+
   return (
     <div
       className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-lg px-1 cursor-pointer select-none'
       onClick={onClick}
     >
       <span className='text-[12px]'>{description}</span>
-      <div className='monaco-keybinding' aria-label={`${modifier}+${keyCode}`}>
-        <span className='monaco-keybinding-key'>{modifier}</span>
+      <div
+        className='monaco-keybinding'
+        aria-label={`${modifierString}+${keyCode}`}
+      >
+        {modifiers.map((mod, index) => (
+          <span className='monaco-keybinding-key' key={index}>
+            {mod}
+          </span>
+        ))}
         {/* leaving this commented, if we want to add separators in future */}
         {/* <span className='monaco-keybinding-key-separator'>+</span> */}
         <span className='monaco-keybinding-key'>{keyCode}</span>
       </div>
     </div>
   );
-}
+};
+
+const ShortcutContainer = () => {
+  const shortcutContainerRef = useRef<HTMLDivElement>(null);
+  const [modifier] = useState(isMac ? 'Cmd' : 'Ctrl');
+
+
+  useEffect(() => {
+    const shortcutContainer = shortcutContainerRef.current;
+    if (shortcutContainer) {
+      const handleWheel = (event: WheelEvent) => {
+        if (event.deltaY !== 0) {
+          event.preventDefault();
+          shortcutContainer.scrollLeft += event.deltaY;
+        }
+      };
+
+      shortcutContainer.addEventListener('wheel', handleWheel);
+      return () => {
+        shortcutContainer.removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, []);
+
+  return (
+    <div
+      ref={shortcutContainerRef}
+      className='flex overflow-x-auto whitespace-nowrap no-scrollbar'
+    >
+      <Shortcut
+        modifiers={[modifier, 'Shift']}
+        keyCode='L'
+        description='Add'
+      />
+      <Shortcut
+        modifiers={[modifier]}
+        keyCode='0'
+        description='Last'
+        onClick={() => postToIde('lastChat', undefined)}
+      />
+      <Shortcut
+        modifiers={[modifier]}
+        keyCode='['
+        description='Big'
+        onClick={() => postToIde('bigChat', undefined)}
+      />
+      <Shortcut
+        modifiers={[modifier]}
+        keyCode=';'
+        description='Close'
+        onClick={() => postToIde('closeChat', undefined)}
+      />
+    </div>
+  );
+};
 
 
 const Layout = () => {
@@ -262,8 +329,6 @@ const Layout = () => {
     status: "disabled",
   });
 
-  const [modifier] = useState(isMac ? 'Cmd' : 'Ctrl');
-
   return (
     <LayoutTopDiv>
       <div
@@ -290,24 +355,7 @@ const Layout = () => {
         >
           {SHOW_SHORTCUTS_ON_PAGES.includes(location.pathname) && (
             <Header>
-              <Shortcut
-                modifier={modifier}
-                keyCode='0'
-                description='Last'
-                onClick={() => postToIde('lastChat', undefined)}
-              />
-              <Shortcut
-                modifier={modifier}
-                keyCode='['
-                description='Big'
-                onClick={() => postToIde('bigChat', undefined)}
-              />
-              <Shortcut
-                modifier={modifier}
-                keyCode=';'
-                description='Close'
-                onClick={() => postToIde('closeChat', undefined)}
-              />
+              <ShortcutContainer />
             </Header>
           )}
           <Outlet />
