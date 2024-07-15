@@ -179,34 +179,25 @@ const ShortcutContainer = () => {
     }
   }, []);
 
+  const shortcuts = [
+    { modifiers: [modifier, 'Shift'], keyCode: 'L', description: 'Add' },
+    { modifiers: [modifier], keyCode: '0', description: 'Last', onClick: () => postToIde('lastChat', undefined) },
+    { modifiers: [modifier], keyCode: '[', description: 'Big', onClick: () => postToIde('bigChat', undefined) },
+    { modifiers: [modifier], keyCode: ';', description: 'Close', onClick: () => postToIde('closeChat', undefined) },
+  ];
+
   return (
     <div
       ref={shortcutContainerRef}
       className='flex overflow-x-auto whitespace-nowrap no-scrollbar'
     >
-      <Shortcut
-        modifiers={[modifier, 'Shift']}
-        keyCode='L'
-        description='Add'
-      />
-      <Shortcut
-        modifiers={[modifier]}
-        keyCode='0'
-        description='Last'
-        onClick={() => postToIde('lastChat', undefined)}
-      />
-      <Shortcut
-        modifiers={[modifier]}
-        keyCode='['
-        description='Big'
-        onClick={() => postToIde('bigChat', undefined)}
-      />
-      <Shortcut
-        modifiers={[modifier]}
-        keyCode=';'
-        description='Close'
-        onClick={() => postToIde('closeChat', undefined)}
-      />
+      {shortcuts.map((shortcut, index) => (
+          <Shortcut
+            modifiers={shortcut.modifiers}
+            keyCode={shortcut.keyCode}
+            description={shortcut.description}
+          />
+      ))}
     </div>
   );
 };
