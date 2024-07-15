@@ -136,7 +136,7 @@ const Shortcut = ({
 
   return (
     <div
-      className='flex gap-2 items-center text-sm leading-6 text-slate-400 rounded-lg px-1 cursor-pointer select-none'
+      className='flex gap-2 items-center text-sm text-slate-400 rounded-lg px-1 cursor-pointer select-none m-0 mx-[2px] border-solid shortcut-border border-[1px] p-[1px]'
       onClick={onClick}
     >
       <span className='text-[12px]'>{description}</span>
