@@ -77,7 +77,9 @@ const StopButton = styled.div`
   border: 0.5px solid ${lightGray};
   border-radius: ${defaultBorderRadius};
   padding: 4px 8px;
-  color: ${lightGray};
+  background: ${vscBackground};
+  z-index: 50;
+  color: var(--vscode-textPreformat-foreground);
 
   cursor: pointer;
 `;
@@ -505,9 +507,9 @@ function GUI(props: GUIProps) {
           ) : null}
         </div>
       </TopGuiDiv>
-      {active && (
+      {true && (
         <StopButton
-          className='mt-auto'
+          className='mt-auto sticky bottom-0'
           onClick={() => {
             dispatch(setInactive());
             if (
