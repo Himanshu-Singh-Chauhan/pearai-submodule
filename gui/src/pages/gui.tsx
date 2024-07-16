@@ -507,7 +507,7 @@ function GUI(props: GUIProps) {
           ) : null}
         </div>
       </TopGuiDiv>
-      {true && (
+      {active && (
         <StopButton
           className='mt-auto sticky bottom-0'
           onClick={() => {
