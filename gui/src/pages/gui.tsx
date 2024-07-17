@@ -193,7 +193,7 @@ function GUI(props: GUIProps) {
     const handleScroll = () => {
       // Scroll only if user is within 200 pixels of the bottom of the window.
       const edgeOffset = -25;
-      const scrollPosition = topGuiDivRef.current?.scrollTop || 0;
+      const scrollPosition = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) || 0;
       const scrollHeight = topGuiDivRef.current?.scrollHeight || 0;
       const clientHeight = window.innerHeight || 0;
 
@@ -204,7 +204,11 @@ function GUI(props: GUIProps) {
       }
     };
 
-    topGuiDivRef.current?.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    window.scrollTo({
+      top: topGuiDivRef.current?.scrollHeight,
+      behavior: "instant" as any,
+    });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -214,7 +218,7 @@ function GUI(props: GUIProps) {
   useLayoutEffect(() => {
     if (userScrolledAwayFromBottom) return;
 
-    topGuiDivRef.current?.scrollTo({
+    window.scrollTo({
       top: topGuiDivRef.current?.scrollHeight,
       behavior: "instant" as any,
     });
