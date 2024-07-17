@@ -218,15 +218,6 @@ function GUI(props: GUIProps) {
     };
   }, [topGuiDivRef.current]);
 
-  useLayoutEffect(() => {
-    if (userScrolledAwayFromBottom) return;
-
-    window.scrollTo({
-      top: topGuiDivRef.current?.scrollHeight,
-      behavior: "instant" as any,
-    });
-  }, [topGuiDivRef.current?.scrollHeight, sessionState.history]);
-
   useEffect(() => {
     // Cmd + Backspace to delete current step
     const listener = (e: any) => {
