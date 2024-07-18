@@ -1,6 +1,6 @@
 import * as YAML from "yaml";
 import { IDE, SlashCommand } from "..";
-import { stripImages } from "../llm/countTokens";
+import { stripImages } from "../llm/utility";
 import { renderTemplatedString } from "../llm/llms";
 import { getBasename } from "../util";
 

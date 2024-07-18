@@ -6,7 +6,7 @@ import {
   LLMOptions,
   ModelProvider,
 } from "../../index.js";
-import { stripImages } from "../countTokens.js";
+import { stripImages } from "../utility.js";
 
 interface IFlowiseApiOptions {
   /** Sampling temperature to use */

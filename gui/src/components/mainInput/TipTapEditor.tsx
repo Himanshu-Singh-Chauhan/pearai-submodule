@@ -25,7 +25,7 @@ import {
   vscInputBorder,
   vscInputBorderFocus,
 } from "..";
-import { SubmenuContextProvidersContext } from "../../App";
+import { SubmenuContextProvidersContext } from "../../context";
 import useHistory from "../../hooks/useHistory";
 import { useInputHistory } from "../../hooks/useInputHistory";
 import useUpdatingRef from "../../hooks/useUpdatingRef";

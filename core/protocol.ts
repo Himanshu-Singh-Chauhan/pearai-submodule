@@ -7,12 +7,34 @@ import {
   LLMFullCompletionOptions,
   MessageContent,
   PersistedSessionInfo,
+  Position,
   RangeInFile,
   SerializedContinueConfig,
   SessionInfo,
 } from "./index.js";
-import { AutocompleteInput } from "./autocomplete/completionProvider.js";
+// import { AutocompleteInput } from "./autocomplete/completionProvider.js";
 import { IdeProtocol } from "./web/webviewProtocol.js";
+import { RangeInFileWithContents } from "./commands/util.js";
+import { RecentlyEditedRange } from "./autocomplete/recentlyEdited.js";
+
+export interface AutocompleteInput {
+  completionId: string;
+  filepath: string;
+  pos: Position;
+  recentlyEditedFiles: RangeInFileWithContents[];
+  recentlyEditedRanges: RecentlyEditedRange[];
+  clipboardText: string;
+  // Used for notebook files
+  manuallyPassFileContents?: string;
+  // Used for VS Code git commit input box
+  manuallyPassPrefix?: string;
+  selectedCompletionInfo?: {
+    text: string;
+    range: Range;
+  };
+  injectDetails?: string;
+}
+
 
 export type ProtocolGeneratorType<T> = AsyncGenerator<{
   done?: boolean;

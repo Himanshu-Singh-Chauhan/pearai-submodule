@@ -6,7 +6,7 @@ import {
   MessagePart,
   RangeInFile,
 } from "core";
-import { stripImages } from "core/llm/countTokens";
+import { stripImages } from "core/llm/utility";
 import { getBasename } from "core/util";
 import { ideRequest } from "../../util/ide";
 import { WebviewIde } from "../../util/webviewIde";

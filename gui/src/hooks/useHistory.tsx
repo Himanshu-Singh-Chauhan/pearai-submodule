@@ -2,7 +2,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { PersistedSessionInfo, SessionInfo } from "core";
 
 import { llmCanGenerateInParallel } from "core/llm/autodetect";
-import { stripImages } from "core/llm/countTokens";
+import { stripImages } from "core/llm/utility";
 import { useSelector } from "react-redux";
 import { defaultModelSelector } from "../redux/selectors/modelSelectors";
 import { newSession } from "../redux/slices/stateSlice";

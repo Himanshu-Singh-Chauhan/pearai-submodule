@@ -3,6 +3,7 @@ import { ChatMessage, MessageContent, MessagePart } from "../index.js";
 import { autodetectTemplateType } from "./autodetect.js";
 import { TOKEN_BUFFER_FOR_SAFETY } from "./constants.js";
 import llamaTokenizer from "./llamaTokenizer.js";
+import { stripImages } from "./utility.js";
 
 interface Encoding {
   encode: Tiktoken["encode"];
@@ -77,16 +78,6 @@ function flattenMessages(msgs: ChatMessage[]): ChatMessage[] {
   return flattened;
 }
 
-export function stripImages(content: MessageContent): string {
-  if (Array.isArray(content)) {
-    return content
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join("\n");
-  } else {
-    return content;
-  }
-}
 
 function countChatMessageTokens(
   modelName: string,

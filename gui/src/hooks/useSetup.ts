@@ -18,9 +18,13 @@ function useSetup(dispatch: Dispatch<any>) {
   const [configLoaded, setConfigLoaded] = useState<boolean>(false);
 
   const loadConfig = async () => {
+    console.log("getting iderequest")
     const config = await ideRequest("config/getBrowserSerialized", undefined);
+    console.log("config ----- ", config)
     dispatch(setConfig(config));
+    console.log("dispatched")
     setConfigLoaded(true);
+    console.log("set true loaded")
 
     // Perform any actions needed with the config
     if (config.ui?.fontSize) {
@@ -31,16 +35,27 @@ function useSetup(dispatch: Dispatch<any>) {
 
   // Load config from the IDE
   useEffect(() => {
-    loadConfig();
-    const interval = setInterval(() => {
-      if (configLoaded) {
-        clearInterval(interval);
-        return;
+    const attemptLoadConfig = async () => {
+      try {
+        console.log("starting trying")
+        await loadConfig();
+      } catch (error) {
+        console.error("Failed to load config:", error);
       }
-      loadConfig();
-    }, 2_000);
+    };
 
-    return () => clearInterval(interval);
+    console.log("starting loading")
+    attemptLoadConfig();
+    // await loadConfig();
+    // const interval = setInterval(() => {
+    //   if (configLoaded) {
+    //     clearInterval(interval);
+    //     return;
+    //   }
+    //   loadConfig();
+    // }, 2_000);
+
+    // return () => clearInterval(interval);
   }, [configLoaded]);
 
   useEffect(() => {

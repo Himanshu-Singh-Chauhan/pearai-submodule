@@ -6,7 +6,7 @@ import {
   MessagePart,
   ModelProvider,
 } from "../../index.js";
-import { stripImages } from "../countTokens.js";
+import { stripImages } from "../utility.js";
 import { streamResponse } from "../stream.js";
 
 class Gemini extends BaseLLM {

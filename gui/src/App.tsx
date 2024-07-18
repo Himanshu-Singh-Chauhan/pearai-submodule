@@ -20,6 +20,7 @@ import LocalOnboarding from "./pages/localOnboarding";
 import ExistingUserOnboarding from "./pages/onboarding/existingUserOnboarding";
 import Onboarding from "./pages/onboarding/onboarding";
 import Stats from "./pages/stats";
+import { SubmenuContextProvidersContext, VscThemeContext } from "./context";
 
 const router = createMemoryRouter([
   {
@@ -87,18 +88,7 @@ const router = createMemoryRouter([
   },
 ]);
 
-export const SubmenuContextProvidersContext = createContext<{
-  getSubmenuContextItems: (
-    providerTitle: string | undefined,
-    query: string,
-  ) => (ContextSubmenuItem & { providerTitle: string })[];
-  addItem: (providerTitle: string, item: ContextSubmenuItem) => void;
-}>({
-  getSubmenuContextItems: () => [],
-  addItem: () => {},
-});
 
-export const VscThemeContext = createContext<any>(undefined);
 
 function App() {
   const dispatch = useDispatch();

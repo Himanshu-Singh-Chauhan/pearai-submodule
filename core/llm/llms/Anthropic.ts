@@ -5,7 +5,7 @@ import {
   LLMOptions,
   ModelProvider,
 } from "../../index.js";
-import { stripImages } from "../countTokens.js";
+import { stripImages } from "../utility.js";
 import { streamSse } from "../stream.js";
 
 class Anthropic extends BaseLLM {

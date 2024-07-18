@@ -16,15 +16,15 @@ def mysterious_function(y, z):
         a, b = ((c + 1, b) if y[c] < z else (a, c - 1))
     return -1
 
-"""Step 2: Use the keyboard shortcut [Cmd+L] to
+"""Step 2: Use the keyboard shortcut [Ctrl+L] to
 select the code and toggle the PearAI input box"""
 
 """Step 3: Ask a question like "What does this code do?" and press Enter"""
-"""Note that you can include context of your codebase by pressing Cmd+Enter"""
+"""Note that you can include context of your codebase by pressing Ctrl+Enter"""
 
 # endregion
 
-# region ————————————————————————————————— Part 2: Edit code [Cmd+I] —————————————————————————————————
+# region ————————————————————————————————— Part 2: Edit code [Ctrl+I] —————————————————————————————————
 
 
 """Step 1: Highlight this code"""
@@ -40,16 +40,16 @@ def filter_even_nums(nums):
             even_nums.append(x)
     return even_nums
 
-"""Step 2: Use the keyboard shortcut [Cmd+I] to edit"""
+"""Step 2: Use the keyboard shortcut [Ctrl+I] to edit"""
 
 """Step 3: Type "Handle edge cases" and press Enter"""
 
 """Step 4: Use keyboard shortcuts to
-accept [Cmd+Shift+Enter] or reject [Cmd+Shift+Backspace] the edit"""
+accept [Ctrl+Shift+Enter] or reject [Ctrl+Shift+Backspace] the edit"""
 
 # endregion
 
-# region ———————————————————————————— Part 3: Debug automatically [Cmd+Shift+R] ————————————————————————————
+# region ———————————————————————————— Part 3: Debug automatically [Ctrl+Shift+R] ————————————————————————————
 
 
 """Step 1: Run this Python file (pearai_tutorial.py), and it will error. Let's debug it!"""
@@ -57,7 +57,7 @@ def print_list(l):
     for i in range(len(l)+1):
         print(l[i])
 
-"""Step 2: Use the keyboard shortcut [Cmd+Shift+R]
+"""Step 2: Use the keyboard shortcut [Ctrl+Shift+R]
 to automatically debug the error"""
 print_list(["a", "b", "c"])
 

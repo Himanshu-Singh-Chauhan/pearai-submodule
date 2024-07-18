@@ -49,9 +49,10 @@
       "cwd": "${workspaceFolder}/extensions/vscode",
       "args": [
         // Pass a directory to manually test in
+        "--trace-warnings",
         "${workspaceFolder}/extensions/vscode",
         "${workspaceFolder}/extensions/vscode/manual-testing-sandbox/example.ts",
-        "--extensionDevelopmentPath=${workspaceFolder}/extensions/vscode"
+        "--extensionDevelopmentPath=${workspaceFolder}/extensions/vscode",
       ],
       "outFiles": ["${workspaceFolder}/extensions/vscode/out/**/*.js"],
       "preLaunchTask": "vscode-extension:build"

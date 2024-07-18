@@ -1,5 +1,5 @@
 import { SlashCommand } from "../../index.js";
-import { stripImages } from "../../llm/countTokens.js";
+import { stripImages } from "../../llm/utility.js";
 import { ChatMessage } from "../../index.js";
 
 const prompt = `

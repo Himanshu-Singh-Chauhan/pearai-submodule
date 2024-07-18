@@ -2,7 +2,7 @@ import { FileEdit, PearAuth, RangeInFile, Thread } from "core";
 import { defaultIgnoreFile } from "core/indexing/ignore";
 import path from "path";
 import * as vscode from "vscode";
-import { threadStopped } from "../debug/debug";
+// import { threadStopped } from "../debug/debug";
 import { VsCodeExtension } from "../extension/vscodeExtension";
 import { GitExtension, Repository } from "../otherExtensions/git";
 import {
@@ -21,6 +21,7 @@ import {
 
 const util = require("util");
 const asyncExec = util.promisify(require("child_process").exec);
+const threadStopped: Map<number, boolean> = new Map();
 
 export class VsCodeIdeUtils {
   visibleMessages: Set<string> = new Set();

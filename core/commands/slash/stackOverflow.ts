@@ -1,5 +1,6 @@
 import { ChatMessageRole, FetchFunction, SlashCommand } from "../../index.js";
-import { pruneStringFromBottom, stripImages } from "../../llm/countTokens.js";
+import { pruneStringFromBottom } from "../../llm/countTokens";
+import { stripImages } from "../../llm/utility.js";
 
 const SERVER_URL = "https://proxy-server-l6vsfbzhba-uw.a.run.app";
 const PROMPT = (

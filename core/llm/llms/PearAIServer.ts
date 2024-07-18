@@ -11,7 +11,7 @@ import { Telemetry } from "../../util/posthog.js";
 import { BaseLLM } from "../index.js";
 import { streamResponse, streamJSON } from "../stream.js";
 import { checkTokens } from "../../db/token.js";
-import { stripImages } from "../countTokens.js";
+import { stripImages } from "../utility.js";
 
 class PearAIServer extends BaseLLM {
   getCredentials: (() => Promise<PearAuth | undefined>) | undefined = undefined;

@@ -3,7 +3,7 @@ import {
   SlashCommand,
   SlashCommandDescription,
 } from "../index.js";
-import { stripImages } from "../llm/countTokens.js";
+import { stripImages } from "../llm/utility.js";
 import { renderTemplatedString } from "../llm/llms/index.js";
 import SlashCommands from "./slash/index.js";
 

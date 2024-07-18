@@ -4,7 +4,7 @@ import {
   LLMOptions,
   ModelProvider,
 } from "../../index.js";
-import { stripImages } from "../countTokens.js";
+import { stripImages } from "../utility.js";
 import { BaseLLM } from "../index.js";
 import { streamResponse } from "../stream.js";
 

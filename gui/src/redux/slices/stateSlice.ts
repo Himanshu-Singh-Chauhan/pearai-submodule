@@ -10,7 +10,7 @@ import {
   PromptLog,
 } from "core";
 import { BrowserSerializedContinueConfig } from "core/config/load";
-import { stripImages } from "core/llm/countTokens";
+import { stripImages } from "core/llm/utility";
 import { v4 } from "uuid";
 
 const TEST_CONTEXT_ITEMS: ContextItemWithId[] = [
@@ -92,6 +92,7 @@ type State = {
   sessionId: string;
   defaultModelTitle: string;
   mainEditorContent?: JSONContent;
+  initialScroll?: boolean;
 };
 
 const initialState: State = {
@@ -156,6 +157,9 @@ export const stateSlice = createSlice({
     },
     setActive: (state) => {
       state.active = true;
+    },
+    setInitialScrollActive: (state) => {
+      state.initialScroll = false;
     },
     clearLastResponse: (state) => {
       if (state.history.length < 2) {
@@ -300,6 +304,7 @@ export const stateSlice = createSlice({
     },
     setInactive: (state) => {
       state.active = false;
+      state.initialScroll = true;
     },
     streamUpdate: (state, action: PayloadAction<string>) => {
       if (state.history.length) {
@@ -474,6 +479,7 @@ export const {
   setConfig,
   addPromptCompletionPair,
   setActive,
+  setInitialScrollActive,
   setEditingContextItemAtIndex,
   initNewActiveMessage,
   setMessageAtIndex,

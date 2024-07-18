@@ -1,6 +1,6 @@
 import { distance } from "fastest-levenshtein";
 import { ChatMessage } from "../index.js";
-import { stripImages } from "../llm/countTokens.js";
+import { stripImages } from "../llm/utility.js";
 
 export type LineStream = AsyncGenerator<string>;
 
