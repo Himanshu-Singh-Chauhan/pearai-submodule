@@ -231,6 +231,23 @@ export class VsCodeExtension {
       this.tabAutocompleteModel.clearLlm();
     });
 
+
+    // Create a file system watcher
+    const watcher = vscode.workspace.createFileSystemWatcher('**/*', false, false, false);
+
+    // Handle file creation
+    watcher.onDidCreate(uri => {
+      this.refreshContextProviders();
+    });
+  
+    // Handle file deletion
+    watcher.onDidDelete(uri => {
+      console.log(`File deleted: ${uri}`);
+      this.refreshContextProviders();
+    });
+  
+    context.subscriptions.push(watcher);
+
     vscode.workspace.onDidSaveTextDocument((event) => {
       // Listen for file changes in the workspace
       const filepath = event.uri.fsPath;
@@ -299,6 +316,10 @@ export class VsCodeExtension {
   private PREVIOUS_BRANCH_FOR_WORKSPACE_DIR: { [dir: string]: string } = {};
   private indexingCancellationController: AbortController | undefined;
 
+  private async refreshContextProviders() {
+    this.webviewProtocol.request("refreshSubmenuItems", undefined); // Refresh all context providers
+  }
+
   private async refreshCodebaseIndex(
     dirs: string[],
     context: vscode.ExtensionContext,
@@ -322,6 +343,8 @@ export class VsCodeExtension {
       this.webviewProtocol.request("indexProgress", update);
       context.globalState.update("pearai.indexingProgress", update);
     }
+
+    this.refreshContextProviders();
 
     if (err) {
       console.log("Codebase Indexing Failed: ", err);
