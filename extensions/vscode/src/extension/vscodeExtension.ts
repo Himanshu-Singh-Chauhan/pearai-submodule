@@ -242,7 +242,6 @@ export class VsCodeExtension {
   
     // Handle file deletion
     watcher.onDidDelete(uri => {
-      console.log(`File deleted: ${uri}`);
       this.refreshContextProviders();
     });
   
