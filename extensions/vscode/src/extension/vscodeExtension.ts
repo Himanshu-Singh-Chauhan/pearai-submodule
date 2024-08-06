@@ -11,6 +11,7 @@ import { setupStatusBar } from "../autocomplete/statusBar";
 import { registerAllCommands } from "../commands";
 import { registerDebugTracker } from "../debug/debug";
 import { ContinueGUIWebviewViewProvider } from "../debugPanel";
+import { EditorInsetViewProvider } from "../editorInsetProvider";
 import { DiffManager } from "../diff/horizontal";
 import { VerticalPerLineDiffManager } from "../diff/verticalPerLine/manager";
 import { VsCodeIde } from "../ideProtocol";
@@ -26,6 +27,7 @@ export class VsCodeExtension {
   private ide: VsCodeIde;
   private tabAutocompleteModel: TabAutocompleteModel;
   private sidebar: ContinueGUIWebviewViewProvider;
+  private inlineView: EditorInsetViewProvider;
   private windowId: string;
   private indexer: CodebaseIndexer;
   private diffManager: DiffManager;
@@ -104,6 +106,14 @@ export class VsCodeExtension {
       this.verticalDiffManager,
     );
 
+    this.inlineView = new EditorInsetViewProvider(
+      this.configHandler,
+      this.ide,
+      this.windowId,
+      this.extensionContext,
+      this.verticalDiffManager,
+    );
+
     setupRemoteConfigSync(
       this.configHandler.reloadConfig.bind(this.configHandler),
     );
@@ -141,6 +151,29 @@ export class VsCodeExtension {
         },
       ),
     );
+
+    // Inline View
+
+    const disposable = vscode.commands.registerCommand('pearai.helloWorld', () => {
+  
+      this.inlineView.showInline();
+      // Display a message box to the user
+      vscode.window.showInformationMessage('Hello World!');
+    });
+
+    context.subscriptions.push(disposable);
+
+
+    // context.subscriptions.push(
+    //   vscode.window.registerWebviewViewProvider(
+    //     "pearai.editorInsetView",
+    //     this.inlineView,
+    //     {
+    //       webviewOptions: { retainContextWhenHidden: true },
+    //     },
+    //   ),
+    // );
+
     this.webviewProtocol = this.sidebar.webviewProtocol;
 
     // Indexing + pause token
