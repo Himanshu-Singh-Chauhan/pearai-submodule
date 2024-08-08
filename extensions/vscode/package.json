@@ -258,9 +258,7 @@
       },
       {
 				"command": "pearai.helloWorld",
-				"title": "Hello World",
-        "category": "PearAI",
-        "group": "PearAI"
+				"title": "Hello World"
 			}
     ],
     "keybindings": [

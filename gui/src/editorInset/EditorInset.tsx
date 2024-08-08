@@ -6,7 +6,10 @@ import TipTapEditor from "../components/mainInput/TipTapEditor";
 import useSetup from "../hooks/useSetup";
 import { selectSlashCommands } from "../redux/selectors";
 import { RootState } from "../redux/store";
-import { ideRequest } from "../util/ide";
+import { ideRequest, postToIde } from "../util/ide";
+import { JSONContent } from "@tiptap/core";
+import { InputModifiers } from "core";
+import resolveEditorContent from "../components/mainInput/resolveInput";
 
 const EditorInsetDiv = styled.div`
   max-width: 500px;
@@ -41,15 +44,32 @@ function EditorInset() {
     return () => resizeObserver.disconnect();
   }, []);
 
+  const handleOnEnter = async (editorState: JSONContent, modifiers: InputModifiers) => { 
+    if (!elementRef.current) return;
+
+    const [contextItems, selectedCode, content] = await resolveEditorContent(
+      editorState,
+      modifiers,
+    );
+
+    const prompt = content[0].text;
+    // console.log("content", content[0].text);
+    postToIde("pearai.quickEdit2", prompt);
+
+    const height = elementRef.current.clientHeight;
+    // ideRequest("jetbrains/editorInsetHeight", {
+    //   height,
+    // });
+    // postToIde("pearai.quickEdit2", prompt);
+  };
+
   return (
     <EditorInsetDiv ref={elementRef}>
       <TipTapEditor
         availableContextProviders={availableContextProviders}
         availableSlashCommands={availableSlashCommands}
         isMainInput={true}
-        onEnter={(e, modifiers) => {
-          console.log("Enter: ", e, modifiers);
-        }}
+        onEnter={handleOnEnter}
       ></TipTapEditor>
     </EditorInsetDiv>
   );

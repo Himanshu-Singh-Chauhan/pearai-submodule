@@ -226,6 +226,9 @@ export class VsCodeWebviewProtocol {
       vscode.commands.executeCommand("workbench.action.toggleDevTools");
       vscode.commands.executeCommand("pearai.viewLogs");
     });
+    this.on("pearai.quickEdit2", (prompt) => {
+      vscode.commands.executeCommand("pearai.quickEdit2", prompt);
+    });
     this.on("reloadWindow", (msg) => {
       vscode.commands.executeCommand("workbench.action.reloadWindow");
     });

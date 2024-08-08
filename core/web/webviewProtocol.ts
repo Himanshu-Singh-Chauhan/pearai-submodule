@@ -81,6 +81,7 @@ export type WebviewProtocol = Protocol &
     showTutorial: [undefined, void];
     showFile: [{ filepath: string }, void];
     openConfigJson: [undefined, void];
+    "pearai.quickEdit2": [string, void]; 
 
     toggleDevTools: [undefined, void];
     reloadWindow: [undefined, void];
