@@ -257,8 +257,16 @@
         "group": "PearAI"
       },
       {
-				"command": "pearai.helloWorld",
-				"title": "Hello World"
+				"command": "pearai.showInlineChat",
+        "category": "PearAI",
+				"title": "Show Inline Chat",
+        "group": "PearAI"
+			},
+      {
+				"command": "pearai.closeInlineChat",
+        "category": "PearAI",
+				"title": "Close Inline Chat",
+        "group": "PearAI"
 			}
     ],
     "keybindings": [

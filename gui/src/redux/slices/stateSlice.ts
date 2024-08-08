@@ -87,6 +87,7 @@ type State = {
   history: ChatHistory;
   contextItems: ContextItemWithId[];
   active: boolean;
+  inlineActive: boolean;
   config: BrowserSerializedContinueConfig;
   title: string;
   sessionId: string;
@@ -98,6 +99,7 @@ const initialState: State = {
   history: [],
   contextItems: [],
   active: false,
+  inlineActive: false,
   config: {
     slashCommands: [
       {
@@ -153,6 +155,9 @@ export const stateSlice = createSlice({
       lastHistory.promptLogs = lastHistory.promptLogs
         ? lastHistory.promptLogs.concat(payload)
         : payload;
+    },
+    setInlineActive: (state) => {
+      state.inlineActive = true;
     },
     setActive: (state) => {
       state.active = true;
@@ -297,6 +302,9 @@ export const stateSlice = createSlice({
         return;
       }
       historyItem.contextItems.push(...payload.contextItems);
+    },
+    setInlineInactive: (state) => {
+      state.inlineActive = false;
     },
     setInactive: (state) => {
       state.active = false;
@@ -464,6 +472,7 @@ export const {
   addContextItems,
   addContextItemsAtIndex,
   setInactive,
+  setInlineInactive,
   streamUpdate,
   newSession,
   deleteContextWithIds,
@@ -474,6 +483,7 @@ export const {
   setConfig,
   addPromptCompletionPair,
   setActive,
+  setInlineActive,
   setEditingContextItemAtIndex,
   initNewActiveMessage,
   setMessageAtIndex,

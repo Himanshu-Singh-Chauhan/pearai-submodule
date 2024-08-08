@@ -247,6 +247,9 @@ export class VsCodeWebviewProtocol {
     this.on("closeChat", (msg) => {
       vscode.commands.executeCommand("pearai.closeChat");
     });
+    this.on("closeInlineChat", (msg) => {
+      vscode.commands.executeCommand("pearai.closeInlineChat");
+    });
 
     // IDE
     this.on("getDiff", async (msg) => {

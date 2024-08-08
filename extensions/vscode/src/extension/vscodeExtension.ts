@@ -154,14 +154,17 @@ export class VsCodeExtension {
 
     // Inline View
 
-    const disposable = vscode.commands.registerCommand('pearai.helloWorld', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('pearai.showInlineChat', () => {
   
       this.inlineView.showInline();
-      // Display a message box to the user
-      vscode.window.showInformationMessage('Hello World!');
-    });
+      vscode.window.showInformationMessage('show inline triggered');
+    }));
 
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(vscode.commands.registerCommand('pearai.closeInlineChat', () => {
+  
+      this.inlineView.disposeInline();
+      vscode.window.showInformationMessage('disposed inline');
+    }));
 
 
     // context.subscriptions.push(

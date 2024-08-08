@@ -33,6 +33,7 @@ export class EditorInsetViewProvider extends BaseWebviewViewProvider {
     
     this.inset.onDidDispose(() => {
       console.log('WEBVIEW disposed...');
+      this.inset = undefined;
     });
 
     this.inset.webview.html = this.getWebviewContent(
@@ -43,6 +44,12 @@ export class EditorInsetViewProvider extends BaseWebviewViewProvider {
       this.verticalDiffManager,
     );
     // The code you place here will be executed every time your command is executed
+  }
+
+  public disposeInline(): void {
+    if (this.inset) {
+      this.inset.dispose();
+    }
   }
 
   getWebviewContent(

@@ -46,6 +46,7 @@ import { Mention } from "./MentionExtension";
 import "./TipTapEditor.css";
 import { getCommandSuggestion, getMentionSuggestion } from "./getSuggestion";
 import { ComboBoxItem } from "./types";
+import InlineInputToolbar from "./InlineInputToolbar";
 
 const InputBoxDiv = styled.div`
   resize: none;
@@ -128,6 +129,7 @@ interface TipTapEditorProps {
   availableContextProviders: ContextProviderDescription[];
   availableSlashCommands: ComboBoxItem[];
   isMainInput: boolean;
+  isInline: boolean;
   onEnter: (editorState: JSONContent, modifiers: InputModifiers) => void;
 
   editorState?: JSONContent;
@@ -734,27 +736,41 @@ function TipTapEditor(props: TipTapEditorProps) {
           event.stopPropagation();
         }}
       />
-      <InputToolbar
-        showNoContext={optionKeyHeld}
-        hidden={!(inputFocused || props.isMainInput)}
-        onAddContextItem={() => {
-          if (editor.getText().endsWith("@")) {
-          } else {
-            editor.commands.insertContent("@");
-          }
-        }}
-        onEnter={onEnterRef.current}
-        onImageFileSelected={(file) => {
-          handleImageFile(file).then(([img, dataUrl]) => {
-            const { schema } = editor.state;
-            const node = schema.nodes.image.create({ src: dataUrl });
-            editor.commands.command(({ tr }) => {
-              tr.insert(0, node);
-              return true;
+      {props.isInline ? (
+        <InlineInputToolbar
+          showNoContext={optionKeyHeld}
+          // hidden={!(inputFocused || props.isMainInput)}
+          onAddContextItem={() => {
+            if (editor.getText().endsWith("@")) {
+            } else {
+              editor.commands.insertContent("@");
+            }
+          }}
+          onEnter={onEnterRef.current}
+        />
+      ) : (
+        <InputToolbar
+          showNoContext={optionKeyHeld}
+          hidden={!(inputFocused || props.isMainInput)}
+          onAddContextItem={() => {
+            if (editor.getText().endsWith("@")) {
+            } else {
+              editor.commands.insertContent("@");
+            }
+          }}
+          onEnter={onEnterRef.current}
+          onImageFileSelected={(file) => {
+            handleImageFile(file).then(([img, dataUrl]) => {
+              const { schema } = editor.state;
+              const node = schema.nodes.image.create({ src: dataUrl });
+              editor.commands.command(({ tr }) => {
+                tr.insert(0, node);
+                return true;
+              });
             });
-          });
-        }}
-      />
+          }}
+        />
+      )}
       {showDragOverMsg &&
         modelSupportsImages(
           defaultModel.provider,
