@@ -13,7 +13,7 @@ export class EditorInsetViewProvider extends BaseWebviewViewProvider {
   private readonly lineHeight = 4; // number of lines for height of inset
 
   public showInline(): void {
-    if (!vscode.window.activeTextEditor) {
+    if (!vscode.window.activeTextEditor || this.inset) {
       return;
     }
     const editor = vscode.window.activeTextEditor;
@@ -43,7 +43,6 @@ export class EditorInsetViewProvider extends BaseWebviewViewProvider {
       this.configHandler,
       this.verticalDiffManager,
     );
-    // The code you place here will be executed every time your command is executed
   }
 
   public disposeInline(): void {
