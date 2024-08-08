@@ -1,93 +1,56 @@
-import { FileEdit, IDE } from 'core';
-import { ConfigHandler } from 'core/config/handler';
+import { BaseWebviewViewProvider } from './baseWebViewProvider';
 import * as vscode from 'vscode';
-import { VerticalPerLineDiffManager } from './diff/verticalPerLine/manager';
 import { getTheme } from './util/getTheme';
 import { getExtensionVersion } from './util/util';
 import { getExtensionUri, getNonce, getUniqueId } from './util/vscode';
-import { VsCodeWebviewProtocol } from './webviewProtocol';
+import { FileEdit, IDE } from 'core';
+import { ConfigHandler } from 'core/config/handler';
+import { VerticalPerLineDiffManager } from './diff/verticalPerLine/manager';
 
-export class EditorInsetViewProvider implements vscode.WebviewViewProvider {
+export class EditorInsetViewProvider extends BaseWebviewViewProvider {
   public static readonly viewType = 'pearai.editorInsetView';
-  public webviewProtocol: VsCodeWebviewProtocol;
-
-  resolveWebviewView(
-    webviewView: vscode.WebviewView,
-    _context: vscode.WebviewViewResolveContext,
-    _token: vscode.CancellationToken,
-  ): void | Thenable<void> {
-    this._webview = webviewView.webview;
-    webviewView.webview.html = this.getInlineContent(
-      this.extensionContext,
-      webviewView,
-      this.ide,
-      this.configHandler,
-      this.verticalDiffManager,
-    );
-  }
-
-  private _webview?: vscode.Webview;
   private inset?: vscode.WebviewEditorInset;
+  private readonly lineHeight = 4; // number of lines for height of inset
 
   public showInline(): void {
     if (!vscode.window.activeTextEditor) {
       return;
     }
+    const editor = vscode.window.activeTextEditor;
+    const range = new vscode.Range(
+      editor.selection.start,
+      editor.selection.end,
+    );
+    // get editor current line
+    const currentLine = editor.document.lineAt(range.start.line);
+
     this.inset = vscode.window.createWebviewTextEditorInset(
       vscode.window.activeTextEditor,
-      5,
-      4,
+      currentLine.range.start.line - 1,
+      this.lineHeight,
       // { localResourceRoots: [ rootUrl ] }
     );
+    
     this.inset.onDidDispose(() => {
       console.log('WEBVIEW disposed...');
     });
-    this.inset.webview.html = this.getInlineContent(
+
+    this.inset.webview.html = this.getWebviewContent(
       this.extensionContext,
       this.inset,
       this.ide,
       this.configHandler,
       this.verticalDiffManager,
-      );
+    );
     // The code you place here will be executed every time your command is executed
   }
 
-  get webview() {
-    return this._webview;
-  }
-
-  public resetWebviewProtocolWebview(): void {
-    if (this._webview) {
-      this.webviewProtocol.webview = this._webview;
-    } else {
-      console.warn('no inline webview found during reset');
-    }
-  }
-
-  sendMainUserInput(input: string) {
-    this.webview?.postMessage({
-      type: 'userInput',
-      input,
-    });
-  }
-
-  constructor(
-    private readonly configHandler: ConfigHandler,
-    private readonly ide: IDE,
-    private readonly windowId: string,
-    private readonly extensionContext: vscode.ExtensionContext,
-    private readonly verticalDiffManager: VerticalPerLineDiffManager,
-  ) {
-    this.webviewProtocol = new VsCodeWebviewProtocol(
-      ide,
-      configHandler,
-      verticalDiffManager,
-    );
-  }
-
-  getInlineContent(
+  getWebviewContent(
     context: vscode.ExtensionContext | undefined,
-    inlineView: vscode.WebviewPanel | vscode.WebviewView | vscode.WebviewEditorInset,
+    inlineView:
+      | vscode.WebviewPanel
+      | vscode.WebviewView
+      | vscode.WebviewEditorInset,
     ide: IDE,
     configHandler: ConfigHandler,
     verticalDiffManager: VerticalPerLineDiffManager,
@@ -157,7 +120,7 @@ export class EditorInsetViewProvider implements vscode.WebviewViewProvider {
         <link href="${styleMainUri}" rel="stylesheet">
         <title>Editor Inset</title>
       </head>
-      <body style="z-index:9999999; height: 200px">
+      <body>
         <div id="root"></div>
 
         ${
