@@ -318,6 +318,11 @@
       },
       {
         "command": "pearai.quickEdit",
+        "mac": "cmd+k",
+        "key": "ctrl+k"
+      },
+      {
+        "command": "pearai.showInlineChat",
         "mac": "cmd+i",
         "key": "ctrl+i"
       },

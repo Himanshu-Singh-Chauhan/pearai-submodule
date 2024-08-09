@@ -11,22 +11,33 @@ export class EditorInsetViewProvider extends BaseWebviewViewProvider {
   public static readonly viewType = 'pearai.editorInsetView';
   private inset?: vscode.WebviewEditorInset;
   private readonly lineHeight = 4; // number of lines for height of inset
+  private openAtLineNumber: number | undefined;
 
   public showInline(): void {
-    if (!vscode.window.activeTextEditor || this.inset) {
+    if (!vscode.window.activeTextEditor) {
       return;
     }
     const editor = vscode.window.activeTextEditor;
+
+    if (this.inset) {
+      this.inset.dispose();
+      const currentLine = editor.document.lineAt(editor.selection.start.line).range.start.line - 1;
+      if (this.openAtLineNumber === currentLine) {
+        return;
+      }
+    }
+
     const range = new vscode.Range(
       editor.selection.start,
       editor.selection.end,
     );
     // get editor current line
     const currentLine = editor.document.lineAt(range.start.line);
+    this.openAtLineNumber = currentLine.range.start.line - 1;
 
     this.inset = vscode.window.createWebviewTextEditorInset(
       vscode.window.activeTextEditor,
-      currentLine.range.start.line - 1,
+      this.openAtLineNumber,
       this.lineHeight,
       // { localResourceRoots: [ rootUrl ] }
     );

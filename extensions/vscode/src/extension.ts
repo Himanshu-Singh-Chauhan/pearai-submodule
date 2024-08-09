@@ -55,7 +55,6 @@ function copySettingsAndInformUser() {
 }
 
 function copyVSCodeSettingsToPearAIDir() {
-  return;
   const vscodeSettingsDir = getVSCodeSettingsDir();
   const pearAIDevSettingsDir = getPearAIDevSettingsDir();
   const vscodeExtensionsDir = getVSCodeExtensionsDir();
@@ -114,9 +113,9 @@ function copyDirectoryRecursiveSync(source: string, destination: string) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  // if (!fs.existsSync(firstLaunchFlag)) {
-  //   copySettingsAndInformUser();
-  // }
+  if (!fs.existsSync(firstLaunchFlag)) {
+    copySettingsAndInformUser();
+  }
   dynamicImportAndActivate(context);
   console.log('Congratulations, your extension "pearai" is now active!');
 }
