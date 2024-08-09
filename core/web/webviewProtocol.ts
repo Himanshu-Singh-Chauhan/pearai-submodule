@@ -145,6 +145,7 @@ export type ReverseWebviewProtocol = {
   indexProgress: [IndexingProgressUpdate, void];
   newSession: [undefined, void];
   refreshSubmenuItems: [undefined, void];
+  setInlineInActive: [undefined, void];
   setTheme: [{ theme: any }, void];
   setColors: [{ [key: string]: string }, void];
   "jetbrains/editorInsetRefresh": [undefined, void];

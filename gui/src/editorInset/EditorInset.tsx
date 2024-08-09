@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { defaultBorderRadius } from "../components";
@@ -10,6 +10,8 @@ import { ideRequest, postToIde } from "../util/ide";
 import { JSONContent } from "@tiptap/core";
 import { InputModifiers } from "core";
 import resolveEditorContent from "../components/mainInput/resolveInput";
+import { setInlineActive, setInlineInactive } from "../redux/slices/stateSlice";
+import { useWebviewListener } from "../hooks/useWebviewListener";
 
 const EditorInsetDiv = styled.div`
   max-width: 500px;
@@ -85,6 +87,7 @@ function EditorInset() {
   const handleOnEnter = async (editorState: JSONContent, modifiers: InputModifiers) => {
     if (!elementRef.current) return;
 
+    dispatch(setInlineActive());
     const [contextItems, selectedCode, content] = await resolveEditorContent(
       editorState,
       modifiers,
@@ -92,7 +95,7 @@ function EditorInset() {
 
     const prompt = content[0].text;
     // console.log("content", content[0].text);
-    postToIde("pearai.quickEdit2", prompt);
+    await postToIde("pearai.quickEdit2", prompt);
 
     const height = elementRef.current.clientHeight;
     // ideRequest("jetbrains/editorInsetHeight", {
@@ -102,6 +105,7 @@ function EditorInset() {
   };
 
   const inlineActive = useSelector((store: RootState) => store.state.inlineActive);
+  console.log(inlineActive)
   // const inlineActive = true;
 
   return (

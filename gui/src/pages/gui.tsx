@@ -39,6 +39,7 @@ import {
   clearLastResponse,
   newSession,
   setInactive,
+  setInlineInactive,
 } from "../redux/slices/stateSlice";
 import {
   setDialogEntryOn,
@@ -53,6 +54,7 @@ import {
 } from "../util";
 import { isJetBrains } from "../util/ide";
 import { getLocalStorage, setLocalStorage } from "../util/localStorage";
+import { set } from "react-hook-form";
 
 const TopGuiDiv = styled.div`
   overflow-y: scroll;
@@ -352,6 +354,13 @@ function GUI(props: GUIProps) {
       mainTextInputRef.current?.focus?.();
     },
     [saveSession],
+  );
+  
+  useWebviewListener( "setInlineInActive",
+    async () => {
+      console.log("got it - setInlineInActive");
+      dispatch(setInlineInactive());
+    }, [setInlineInactive],
   );
 
   useWebviewListener(

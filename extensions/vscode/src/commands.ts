@@ -437,6 +437,10 @@ const commandsMap: (
       if (prompt.length > 0) {
         await verticalDiffManager.streamEdit(prompt, defaultModelTitle);
       } 
+
+      console.log("calling setInlineInActive");
+      sidebar.webviewProtocol?.request("setInlineInActive", undefined);
+
       // else {
       //   // Pick context first
       //   const selectedProviders = await vscode.window.showQuickPick(
