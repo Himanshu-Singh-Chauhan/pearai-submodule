@@ -70,7 +70,6 @@ const InputBoxDiv = styled.div`
   background-color: ${vscInputBackground};
   color: ${vscForeground};
   z-index: 1;
-  border: 0.5px solid ${vscInputBorder};
   outline: none;
   font-size: ${getFontSize()}px;
   &:focus {
@@ -429,7 +428,7 @@ function TipTapEditor(props: TipTapEditorProps) {
     ],
     editorProps: {
       attributes: {
-        class: "outline-none -mt-1 mb-1 overflow-hidden",
+        class: "outline-none overflow-hidden",
         style: `font-size: ${getFontSize()}px;`,
       },
     },
