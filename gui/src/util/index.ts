@@ -39,7 +39,7 @@ export function getMetaKeyLabel(): string {
       return "⌘";
     case "linux":
     case "windows":
-      return "^";
+      return "Ctrl";
     default:
       return "^";
   }

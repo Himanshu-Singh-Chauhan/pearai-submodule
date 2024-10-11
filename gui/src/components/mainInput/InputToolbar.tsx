@@ -4,8 +4,15 @@ import {
   PaperAirplaneIcon,
   AtSymbolIcon,
   BoltIcon,
+  SparklesIcon,
+  ArrowUpIcon,
+  PaperClipIcon,
+  BarsArrowUpIcon
 } from "@heroicons/react/24/outline";
-import { PhotoIcon as SolidPhotoIcon } from "@heroicons/react/24/solid";
+import {
+  PhotoIcon,
+  PhotoIcon as SolidPhotoIcon,
+} from "@heroicons/react/24/solid";
 import { InputModifiers } from "core";
 import { modelSupportsImages } from "core/llm/autodetect";
 import { useRef, useState } from "react";
@@ -47,7 +54,7 @@ const StyledDiv = styled.div<{ isHidden: boolean }>`
   }
 
   /* Add a media query to hide the right-hand set of components */
-  @media (max-width: 400px) {
+  @media (max-width: 300px) {
     & > span:last-child {
       display: none;
     }
@@ -115,7 +122,53 @@ function InputToolbar(props: InputToolbarProps) {
         id="input-toolbar"
       >
         <span className="flex gap-0.5 items-center whitespace-nowrap">
-          <ModelSelect />
+          {/* <ModelSelect /> */}
+          {defaultModel &&
+            modelSupportsImages(
+              defaultModel.provider,
+              defaultModel.model,
+              defaultModel.title,
+              defaultModel.capabilities,
+            ) && (
+              <span
+                className="mt-0.5 cursor-pointer"
+                onMouseLeave={() => setFileSelectHovered(false)}
+                onMouseEnter={() => setFileSelectHovered(true)}
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                  accept=".jpg,.jpeg,.png,.gif,.svg,.webp"
+                  onChange={(e) => {
+                    for (const file of e.target.files) {
+                      props.onImageFileSelected(file);
+                    }
+                  }}
+                />
+                {fileSelectHovered ? (
+                  <StyledSpan>
+                    <SolidPhotoIcon
+                      className="h-4 w-4"
+                      color={lightGray}
+                      onClick={(e) => {
+                        fileInputRef.current?.click();
+                      }}
+                    />
+                  </StyledSpan>
+                ) : (
+                  <StyledSpan>
+                    <OutlinePhotoIcon
+                      className="h-4 w-4"
+                      color={lightGray}
+                      onClick={(e) => {
+                        fileInputRef.current?.click();
+                      }}
+                    />
+                  </StyledSpan>
+                )}
+              </span>
+            )}
           <StyledSpan
             onClick={(e) => {
               props.onAddContextItem();
@@ -141,52 +194,12 @@ function InputToolbar(props: InputToolbarProps) {
             }}
             className={"hover:underline cursor-pointer float-right"}
           >
-            <BoltIcon className="h-4 w-4" aria-hidden="true" />
+            <Sparkles3
+              // className="h-5 w-4"
+              aria-hidden="true"
+              // fill="currentColor"
+            />
           </StyledSpan>
-          {defaultModel &&
-            modelSupportsImages(
-              defaultModel.provider,
-              defaultModel.model,
-              defaultModel.title,
-              defaultModel.capabilities,
-            ) && (
-              <span
-                className="ml-1 mt-0.5 cursor-pointer"
-                onMouseLeave={() => setFileSelectHovered(false)}
-                onMouseEnter={() => setFileSelectHovered(true)}
-              >
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  accept=".jpg,.jpeg,.png,.gif,.svg,.webp"
-                  onChange={(e) => {
-                    for (const file of e.target.files) {
-                      props.onImageFileSelected(file);
-                    }
-                  }}
-                />
-                {fileSelectHovered ? (
-                  <SolidPhotoIcon
-                    width="1.4em"
-                    height="1.4em"
-                    color={lightGray}
-                    onClick={(e) => {
-                      fileInputRef.current?.click();
-                    }}
-                  />
-                ) : (
-                  <OutlinePhotoIcon
-                    width="1.4em"
-                    height="1.4em"
-                    color={lightGray}
-                    onClick={(e) => {
-                      fileInputRef.current?.click();
-                    }}
-                  />
-                )}
-              </span>
-            )}
         </span>
 
         <span className="flex items-center gap-2 whitespace-nowrap">
@@ -201,8 +214,8 @@ function InputToolbar(props: InputToolbarProps) {
                 padding: "2px 4px",
               }}
             >
-              {getAltKeyLabel()} ⏎{" "}
-              {useActiveFile ? "No context" : "Use active file"}
+              <span className="font-mono">{getAltKeyLabel()} Enter {" "}</span>
+              {useActiveFile ? "No context" : "to Use active file"}
             </span>
           ) : (
             <StyledSpan
@@ -220,9 +233,18 @@ function InputToolbar(props: InputToolbarProps) {
                   noContext: !useActiveFile,
                 });
               }}
-              className={"hover:underline cursor-pointer float-right"}
+              className={"cursor-pointer float-right"}
             >
-              {getMetaKeyLabel()} ⏎ Use codebase
+              {/* <span>{getMetaKeyLabel()} +</span>
+              &nbsp;
+              <span>Enter</span>
+              &nbsp;
+              Use codebase */}
+              <BarsArrowUpIcon
+              className="h-4 w-4"
+              strokeWidth={2}
+              aria-hidden="true"
+              />
             </StyledSpan>
           )}
           <EnterButton
@@ -234,7 +256,11 @@ function InputToolbar(props: InputToolbarProps) {
               });
             }}
           >
-            <PaperAirplaneIcon className="h-4 w-4" aria-hidden="true" />
+            <ArrowUpIcon
+              className="h-4 w-3"
+              strokeWidth={3}
+              aria-hidden="true"
+            />
           </EnterButton>
         </span>
       </StyledDiv>
@@ -243,3 +269,29 @@ function InputToolbar(props: InputToolbarProps) {
 }
 
 export default InputToolbar;
+
+const Sparkles2 = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="size-4"
+  >
+    <path
+      fillRule="evenodd"
+      d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+const Sparkles3 = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    className="size-4"
+  >
+    <path d="M15.98 1.804a1 1 0 0 0-1.96 0l-.24 1.192a1 1 0 0 1-.784.785l-1.192.238a1 1 0 0 0 0 1.962l1.192.238a1 1 0 0 1 .785.785l.238 1.192a1 1 0 0 0 1.962 0l.238-1.192a1 1 0 0 1 .785-.785l1.192-.238a1 1 0 0 0 0-1.962l-1.192-.238a1 1 0 0 1-.785-.785l-.238-1.192ZM6.949 5.684a1 1 0 0 0-1.898 0l-.683 2.051a1 1 0 0 1-.633.633l-2.051.683a1 1 0 0 0 0 1.898l2.051.684a1 1 0 0 1 .633.632l.683 2.051a1 1 0 0 0 1.898 0l.683-2.051a1 1 0 0 1 .633-.633l2.051-.683a1 1 0 0 0 0-1.898l-2.051-.683a1 1 0 0 1-.633-.633L6.95 5.684ZM13.949 13.684a1 1 0 0 0-1.898 0l-.184.551a1 1 0 0 1-.632.633l-.551.183a1 1 0 0 0 0 1.898l.551.183a1 1 0 0 1 .633.633l.183.551a1 1 0 0 0 1.898 0l.184-.551a1 1 0 0 1 .632-.633l.551-.183a1 1 0 0 0 0-1.898l-.551-.184a1 1 0 0 1-.633-.632l-.183-.551Z" />
+  </svg>
+);

@@ -49,7 +49,6 @@ const StyledListboxOptions = styled(Listbox.Options)`
   cursor: default;
 
   border-radius: ${defaultBorderRadius};
-  border: 0.5px solid ${lightGray};
   background-color: ${vscInputBackground};
 
   max-height: 300px;
@@ -219,7 +218,7 @@ function ModelSelect() {
           className="h-[18px] overflow-hidden"
           style={{ padding: 0 }}
         >
-          <span className="hover:underline">
+          <span>
             {modelSelectTitle(defaultModel) || "Select model"}{" "}
             <ChevronDownIcon className="h-2.5 w-2.5" aria-hidden="true" />
           </span>
@@ -268,16 +267,18 @@ function ModelSelect() {
 
           <Divider />
 
-          <i
+          <span
             style={{
               color: lightGray,
               padding: "4px",
               marginTop: "4px",
               display: "block",
+              // fontFamily: "monospace"
             }}
+            className="tracking-wider"
           >
-            Press {getMetaKeyLabel()}+' to toggle
-          </i>
+            Press {getMetaKeyLabel()} + ' to toggle models
+          </span>
         </StyledListboxOptions>
       </div>
     </Listbox>
