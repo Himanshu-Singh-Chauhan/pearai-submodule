@@ -61,6 +61,7 @@ import { isBareChatMode, isPerplexityMode } from '../util/bareChatMode';
 import { Badge } from "../components/ui/badge";
 
 
+import ModelSelect from "../components/modelSelection/ModelSelect";
 
 const TopGuiDiv = styled.div`
   overflow-y: scroll;
@@ -122,7 +123,6 @@ const StepsDiv = styled.div`
 
 const NewSessionButton = styled.div`
   width: fit-content;
-  margin-right: auto;
   margin-left: 6px;
   margin-top: 2px;
   margin-bottom: 8px;
@@ -636,18 +636,21 @@ function GUI() {
                     Restart Session
                   </NewSessionButton>
                 ) : (
-                  <>
+              <div className="mt-2 flex flex-col min-[250px]:flex-row">
+                  <NewSessionButton className="mr-auto">
+                    {!bareChatMode && !perplexityMode && <ModelSelect />}
+                  </NewSessionButton>
                     <NewSessionButton
                       onClick={() => {
                         saveSession();
                       }}
-                      className="mr-auto"
+                      className="ml-auto"
                     >
                       New Session
                       {!bareChatMode && ` (${getMetaKeyLabel()} ${isJetBrains() ? "J" : "L"})`}
                     </NewSessionButton>
                     {!bareChatMode && !!showAiderHint && <AiderBetaButton />}
-                  </>
+                  </div>
                 )}
                 {!perplexityMode && showPerplexityHint && <PerplexityBetaButton />}
 
@@ -655,12 +658,15 @@ function GUI() {
 ) : (
   <>
     {!aiderMode && getLastSessionId() ? (
-      <div className="mt-2">
+      <div className="mt-2 flex flex-col min-[250px]:flex-row">
+        <NewSessionButton className="mr-auto">
+          <ModelSelect />
+        </NewSessionButton>
         <NewSessionButton
           onClick={async () => {
             loadLastSession();
           }}
-          className="mr-auto flex items-center gap-2"
+          className="ml-auto flex items-center gap-2"
         >
           <ArrowLeftIcon width="11px" height="11px" />
           Last Session
