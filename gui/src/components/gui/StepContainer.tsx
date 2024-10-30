@@ -121,6 +121,15 @@ function StepContainer({
     }
   }, [item.message.content, active]);
 
+  console.dir('StepContainer props:', {
+    active,
+    isLast,
+    isStreaming: active && isLast
+  });
+  console.dir(active)
+  console.dir(isLast)
+  console.dir(active && isLast)
+
   return (
     <div>
       <div className="relative">
@@ -141,6 +150,8 @@ function StepContainer({
               source={stripImages(item.message.content)}
               showCodeBorder={true}
               isStreaming={active}
+              isLast={isLast}
+              messageIndex={index}
               integrationSource={source}
             />
           )}
